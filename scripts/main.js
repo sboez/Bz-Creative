@@ -16,6 +16,7 @@ async function init() {
 	await Load.loadFile("assets/models/street_car.glb");
 
 	window.addEventListener('resize', onWindowResize, false);
+	document.body.addEventListener('keydown', keyPressed);
 	document.body.appendChild(Scene.renderer.domElement);
 }
 
@@ -34,6 +35,24 @@ function updatePhysics() {
 
 	Load.model.position.copy(Physic.bodyCar.position);
 	Load.model.quaternion.copy(Physic.bodyCar.quaternion);
+}
+
+function keyPressed(e){
+	switch(e.key) {
+		case 'ArrowUp':
+			Load.model.rotateX(-0.1);
+			break;
+		case 'ArrowDown':
+			Load.model.rotateX(0.1);
+			break;
+		case 'ArrowLeft':
+			Load.model.rotateY(-0.1);
+			break;
+		case 'ArrowRight':
+			Load.model.rotateY(0.1);
+			break;
+	}
+	e.preventDefault();
 }
 
 function animate() {

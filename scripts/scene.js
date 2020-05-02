@@ -8,6 +8,11 @@ class SceneInit {
 
 		let light = new THREE.HemisphereLight(0xffffff, 0x404040, 1); 
 		this.scene.add(light);
+		/* To visualize physic car */
+		this.geometryCar = new THREE.BoxGeometry(30, 23, 62);
+		this.materialCar = new THREE.MeshBasicMaterial({ color: 0xff0048, transparent: true, opacity: 0.2});
+		this.meshBoxCar = new THREE.Mesh(this.geometryCar, this.materialCar);
+		this.scene.add(this.meshBoxCar);
 
 		let plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0xbfbfbf }));
 		plane.receiveShadow = true;

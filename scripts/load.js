@@ -11,6 +11,9 @@ class LoadInit {
 				});
 				this.model = gltf.scene;
 				this.model.scale.multiplyScalar(40);
+				this.model.traverse((e) => {
+					if(e.isMesh) e.geometry.translate(0,0,1.2);
+				});
 				Scene.scene.add(this.model);
 				resolve(gltf.scene);
 			});

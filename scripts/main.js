@@ -1,6 +1,14 @@
-let clock, mixer, Scene;
+let clock, mixer, Scene, Load;
+document.onkeydown = handler;
+document.onkeyup = handler;
 
-init();
+async function letsPlay() {
+	init();
+	await Load.loadFile('assets/models/Xbot.glb');
+	mixer = new THREE.AnimationMixer(Load.model);
+	animModel();
+	animate();
+}
 
 function init() {
 	clock = new THREE.Clock();
@@ -8,28 +16,8 @@ function init() {
 	Scene = new SceneInit();
 	Scene.createScene();
 
-	const loader = new THREE.GLTFLoader();
-	loader.load('assets/models/Xbot.glb', (gltf) => {
-		let model = gltf.scene;
-		model.traverse((object) => {
-			if (object.isMesh) {
-				object.castShadow = true;
-				object.receiveShadow = true;
-			}
-		});
-		model.scale.multiplyScalar(0.8);
-		Scene.scene.add(model);
+	Load = new LoadInit();
 
-		let animation = gltf.animations;
-		mixer = new THREE.AnimationMixer(model);
-
-		idleAction = mixer.clipAction(animation[0]);
-		walkAction = mixer.clipAction(animation[3]);
-		
-		idleAction.play();
-
-		animate();
-	});
 	document.body.appendChild(Scene.renderer.domElement);
 	window.addEventListener('resize', onWindowResize, false);
 }
@@ -40,23 +28,27 @@ function onWindowResize() {
 	Scene.renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-document.onkeydown = handler;
-document.onkeyup = handler;
+function animModel() {
+	idleAction = mixer.clipAction(Load.animation[0]);
+	walkAction = mixer.clipAction(Load.animation[3]);
+
+	idleAction.play();
+}
 
 function handler(event) {
-    var up = (event.type == 'keyup');
+    let up = (event.type == 'keyup');
 
-    if(!up && event.type !== 'keydown'){
-        return;
+    if(!up && event.type !== 'keydown') return;
+
+    if (up) {
+    	console.log("up was called !");
+    	walkAction.stop();
+    	idleAction.play();
+    } else if (event.keyCode == 87) {
+    	console.log("W key down");
+		walkAction.play();
+    	idleAction.stop();
     }
-
-    if (up) idleAction.play();
-
-    switch(event.keyCode) {
-	    case 87: // forward - W
-			walkAction.play();
-			break;
-	}
 }
 
 function animate() {
@@ -65,3 +57,5 @@ function animate() {
 	mixer.update(mixerUpdateDelta);
 	Scene.renderer.render(Scene.scene, Scene.camera);
 }
+
+letsPlay();

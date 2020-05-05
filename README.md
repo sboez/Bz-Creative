@@ -9,7 +9,7 @@ Open source website BzCreative, coming soon.
 
 ## Challenge 
 
-Physics : Three.js doesn't have physic engine but several lib exists, I choose [cannon.js](https://github.com/schteppe/cannon.js) for its simplicity compared to others.
+**Physics :** Three.js doesn't have physic engine but several lib exists, I choose [cannon.js](https://github.com/schteppe/cannon.js) for its simplicity compared to others.
 
 
 ## Usage

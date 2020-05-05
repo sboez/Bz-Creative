@@ -10,7 +10,7 @@ class LoadInit {
 						object.receiveShadow = true;
 					}
 				});
-				this.model.scale.multiplyScalar(0.8);
+				this.model.scale.multiplyScalar(1);
 				Scene.scene.add(this.model);
 
 				this.animation = gltf.animations;

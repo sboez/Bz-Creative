@@ -2,23 +2,22 @@ class SceneInit {
 	createScene() {
 		this.scene = new THREE.Scene();
 		this.scene.background = new THREE.Color(0xa0a0a0);
-		this.scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
 
 		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
-		this.camera.position.set(- 1, 2, 3);
+		this.camera.position.set(0, 5, 10);
 
 		let light = new THREE.HemisphereLight(0xffffff, 0x404040, 1); 
 		this.scene.add(light);
 		/* To visualize physic car */
-		this.geometryCar = new THREE.BoxGeometry(25, 50, 10);
-		this.materialCar = new THREE.MeshBasicMaterial({ color: 0xff0048, transparent: true, opacity: 0.2});
-		this.meshBoxCar = new THREE.Mesh(this.geometryCar, this.materialCar);
-		// this.scene.add(this.meshBoxCar);
+		this.geoPlayer = new THREE.BoxGeometry(1, 2, 1);
+		this.matPlayer = new THREE.MeshBasicMaterial({ color: 0xff0048, transparent: true, opacity: 0.2});
+		this.meshBoxPlayer = new THREE.Mesh(this.geoPlayer, this.matPlayer);
+		this.scene.add(this.meshBoxPlayer);
 		/* Box colision test */
-		this.geoTest = new THREE.BoxGeometry(20, 25, 25);
+		this.geoTest = new THREE.BoxGeometry(2, 2, 2);
 		this.matTest = new THREE.MeshBasicMaterial({ color: 0x00ff48, transparent: true, opacity: 0.2});
 		this.meshBoxTest = new THREE.Mesh(this.geoTest, this.matTest);
-		// this.scene.add(this.meshBoxTest);
+		this.scene.add(this.meshBoxTest);
 
 		let plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(2000, 2000), new THREE.MeshPhongMaterial({ color: 0xbfbfbf }));
 		plane.receiveShadow = true;
@@ -36,8 +35,8 @@ class SceneInit {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 	}
 	createControls() {		
-		let controls = new THREE.OrbitControls(Scene.camera, Scene.renderer.domElement);
+		let controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
 		controls.target.set(0, 1, 0);
 		controls.update();
-	} 
+	}
 }

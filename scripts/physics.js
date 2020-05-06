@@ -24,17 +24,22 @@ class PhysicsInit {
 		});
 		this.world.addContactMaterial(this.wheelGroundContactMaterial);
 
+		/* Test box colision */
+		this.shapeTest = new CANNON.Box(new CANNON.Vec3(1, 1, 1));
+		this.bodyTest = new CANNON.Body({ mass: 150 });
+		this.bodyTest.addShape(this.shapeTest);
+		this.bodyTest.position.set(0, 10, 10);
+		this.world.addBody(this.bodyTest);
+
 		this.createCar();
 		this.createWheels(this.wheelMaterial);
 	}
 	createCar() {
 		/* car physics body */
-		this.chassisShape = new CANNON.Box(new CANNON.Vec3(1, 0.3, 2));
-		this.chassisBody = new CANNON.Body({mass: 150});
+		this.chassisShape = new CANNON.Box(new CANNON.Vec3(1, .3, 2));
+		this.chassisBody = new CANNON.Body({ mass: 150 });
 		this.chassisBody.addShape(this.chassisShape);
-		this.chassisBody.position.set(0, 0.2, 0);
 		this.chassisBody.angularVelocity.set(0, 0, 0); /* initial velocity */
-
 		/* parent vehicle object */
 		this.vehicle = new CANNON.RaycastVehicle({
 		  chassisBody: this.chassisBody,
@@ -45,40 +50,45 @@ class PhysicsInit {
 	}
 	createWheels(wheelMaterial) {
 		this.options = {
-			radius: 0.3,
+			radius: 0.35,
 			directionLocal: new CANNON.Vec3(0, -1, 0),
-			suspensionStiffness: 45,
-			suspensionRestLength: 0.4,
-			frictionSlip: 5,
-			dampingRelaxation: 2.3,
-			dampingCompression: 4.5,
-			maxSuspensionForce: 200000,
-			rollInfluence:  0.01,
 			axleLocal: new CANNON.Vec3(-1, 0, 0),
-			chassisConnectionPointLocal: new CANNON.Vec3(1, 1, 0),
-			maxSuspensionTravel: 0.25,
-			customSlidingRotationalSpeed: -30,
-			useCustomSlidingRotationalSpeed: true,
+			chassisConnectionPointLocal: new CANNON.Vec3(0, 1, 0),
+	        frontOffsetDepth: 0.635,
+	        backOffsetDepth: - 0.475,
+	        offsetWidth: 0.39,
+	        height: 0.24,
+	        suspensionStiffness: 25,
+	        suspensionRestLength: 0.1,
+	        frictionSlip: 5,
+	        dampingRelaxation: 1.8,
+	        dampingCompression: 1.5,
+	        maxSuspensionForce: 100000,
+	        rollInfluence:  0.01,
+	        maxSuspensionTravel: 0.3,
+	        customSlidingRotationalSpeed: - 30,
+	        mass: 5
 		};
 
-		let axlewidth = 0.7;
-		this.options.chassisConnectionPointLocal.set(axlewidth, 0, -1);
+		let axlewidth = 0.85;
+    	let chassisLength = 1.05
+		this.options.chassisConnectionPointLocal.set(axlewidth, 0, -chassisLength);
 		this.vehicle.addWheel(this.options);
 
-		this.options.chassisConnectionPointLocal.set(-axlewidth, 0, -1);
+		this.options.chassisConnectionPointLocal.set(-axlewidth, 0, -chassisLength);
 		this.vehicle.addWheel(this.options);
 
-		this.options.chassisConnectionPointLocal.set(axlewidth, 0, 1);
+		this.options.chassisConnectionPointLocal.set(axlewidth, 0, chassisLength);
 		this.vehicle.addWheel(this.options);
 
-		this.options.chassisConnectionPointLocal.set(-axlewidth, 0, 1);
+		this.options.chassisConnectionPointLocal.set(-axlewidth, 0, chassisLength);
 		this.vehicle.addWheel(this.options);
 
 		this.vehicle.addToWorld(this.world);
 
 		/* car wheels */
 		this.vehicle.wheelInfos.forEach(function(wheel) {
-			let shape = new CANNON.Cylinder(wheel.radius, wheel.radius, wheel.radius / 2, 20);
+			let shape = new CANNON.Cylinder(wheel.radius, wheel.radius, 0.15, 20);
 			let body = new CANNON.Body({mass: 1, material: wheelMaterial});
 			let q = new CANNON.Quaternion();
 			q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);

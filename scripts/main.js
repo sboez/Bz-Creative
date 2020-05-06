@@ -3,7 +3,7 @@ let wheelBodies = [], wheelVisuals = [];
 
 async function letsPlay() {
 	init();
-	await Load.loadFile('assets/models/street_car.glb');
+	await Load.loadFile('assets/models/street_car2.glb');
 	animate();
 }
 
@@ -28,8 +28,12 @@ function init() {
 			wheelVisuals[i].position.copy(t.position);
 			wheelVisuals[i].quaternion.copy(t.quaternion);
 			/* update wheel model */
-			Load.model.children[0].children[i].position.copy(t.position);
-			Load.model.children[0].children[i].position.copy(t.quaternion);
+			let w = Load.wheelMeshes[i];
+			let savePar = w.parent;
+			Scene.scene.attach(w);
+			w.quaternion.copy(t.quaternion);
+			w.position.copy(wheelBodies[i].position);
+			savePar.attach(w)
 		}
 	});
 	document.body.appendChild(Scene.renderer.domElement);
@@ -52,6 +56,9 @@ function updatePhysics() {
 
   Load.model.position.copy(Physic.chassisBody.position);
   Load.model.quaternion.copy(Physic.chassisBody.quaternion);
+
+  Scene.meshBoxTest.position.copy(Physic.bodyTest.position);
+  Scene.meshBoxTest.quaternion.copy(Physic.bodyTest.quaternion);
 }
 
 function animate() {

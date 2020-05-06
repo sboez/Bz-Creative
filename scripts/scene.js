@@ -6,15 +6,15 @@ class SceneInit {
 		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
 		this.camera.position.set(0, 5, 10);
 		/* To visualize physic car */
-		this.geometry = new THREE.BoxGeometry(2, 0.6, 4); // double chasis shape
+		this.geometry = new THREE.BoxGeometry(2, 0.6, 4);
 		this.material = new THREE.MeshBasicMaterial({color: 0xff0048, transparent: true, opacity: 0.4, side: THREE.DoubleSide});
 		this.box = new THREE.Mesh(this.geometry, this.material);
-		this.scene.add(this.box);
+		// this.scene.add(this.box);
 		/* Box colision test */
 		this.geoTest = new THREE.BoxGeometry(2, 2, 2);
 		this.matTest = new THREE.MeshBasicMaterial({ color: 0x00ff48, transparent: true, opacity: 0.2});
 		this.meshBoxTest = new THREE.Mesh(this.geoTest, this.matTest);
-		// this.scene.add(this.meshBoxTest);		
+		this.scene.add(this.meshBoxTest);
 
 		this.plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(100, 100), new THREE.MeshPhongMaterial({ color: 0xbfbfbf, side: THREE.DoubleSide }));
 		this.plane.receiveShadow = true;
@@ -58,11 +58,12 @@ class SceneInit {
 		controls.update();
 	}
 	visualizeWheels(wheel, wheelVisuals) {
-		this.geoWheels = new THREE.CylinderGeometry(wheel.radius, wheel.radius, 0.4, 32);
+		this.geoWheels = new THREE.CylinderGeometry(wheel.radius, wheel.radius, 0.3, 32);
 		this.matWheels = new THREE.MeshBasicMaterial({
 			color: 0xd0901d,
 			transparent: true, 
 			opacity: 0.8,
+			wireframe: true,
 			side: THREE.DoubleSide,
 		});
 		this.cylinder = new THREE.Mesh(this.geoWheels, this.matWheels);

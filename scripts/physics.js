@@ -1,11 +1,11 @@
 class PhysicsInit {
 	createWorld() {
-		/* Set the world */
+		/* set the world */
 		this.world = new CANNON.World();
 		this.world.broadphase = new CANNON.SAPBroadphase(this.world);
 		this.world.gravity.set(0, -10, 0);
 		this.world.defaultContactMaterial.friction = 0;
-		/* Create floor */ 
+		/* create floor */ 
 		this.groundShape = new CANNON.Plane();
 		this.groundBody = new CANNON.Body({ 
 			mass: 0, 
@@ -14,17 +14,15 @@ class PhysicsInit {
 		this.groundBody.addShape(this.groundShape);
 		this.groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
 		this.world.addBody(this.groundBody);
-		/* Materials */
+		/* materials */
 		this.groundMaterial = new CANNON.Material('groundMaterial');
 		this.wheelMaterial = new CANNON.Material('wheelMaterial');
 		this.wheelGroundContactMaterial = new CANNON.ContactMaterial(this.wheelMaterial, this.groundMaterial, {
 		    friction: 0.3,
-		    restitution: 0,
-		    contactEquationStiffness: 1000,
+		    restitution: 0
 		});
 		this.world.addContactMaterial(this.wheelGroundContactMaterial);
-
-		/* Test box colision */
+		/* test box colision */
 		this.shapeTest = new CANNON.Box(new CANNON.Vec3(1, 1, 1));
 		this.bodyTest = new CANNON.Body({ mass: 150 });
 		this.bodyTest.addShape(this.shapeTest);
@@ -39,7 +37,7 @@ class PhysicsInit {
 		this.chassisShape = new CANNON.Box(new CANNON.Vec3(1, .3, 2));
 		this.chassisBody = new CANNON.Body({ mass: 150 });
 		this.chassisBody.addShape(this.chassisShape);
-		this.chassisBody.angularVelocity.set(0, 0, 0); /* initial velocity */
+		this.chassisBody.angularVelocity.set(0, 0, 0);
 		/* parent vehicle object */
 		this.vehicle = new CANNON.RaycastVehicle({
 		  chassisBody: this.chassisBody,
@@ -55,7 +53,7 @@ class PhysicsInit {
 			axleLocal: new CANNON.Vec3(-1, 0, 0),
 			chassisConnectionPointLocal: new CANNON.Vec3(0, 1, 0),
 	        frontOffsetDepth: 0.635,
-	        backOffsetDepth: - 0.475,
+	        backOffsetDepth: -0.475,
 	        offsetWidth: 0.39,
 	        height: 0.24,
 	        suspensionStiffness: 25,
@@ -65,9 +63,7 @@ class PhysicsInit {
 	        dampingCompression: 1.5,
 	        maxSuspensionForce: 100000,
 	        rollInfluence:  0.01,
-	        maxSuspensionTravel: 0.3,
-	        customSlidingRotationalSpeed: - 30,
-	        mass: 5
+	        maxSuspensionTravel: 0.2
 		};
 
 		let axlewidth = 0.85;
@@ -89,7 +85,7 @@ class PhysicsInit {
 		/* car wheels */
 		this.vehicle.wheelInfos.forEach(function(wheel) {
 			let shape = new CANNON.Cylinder(wheel.radius, wheel.radius, 0.15, 20);
-			let body = new CANNON.Body({mass: 1, material: wheelMaterial});
+			let body = new CANNON.Body({mass: 150, material: wheelMaterial});
 			let q = new CANNON.Quaternion();
 			q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
 			body.addShape(shape, new CANNON.Vec3(), q);

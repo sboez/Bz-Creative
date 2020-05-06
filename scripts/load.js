@@ -10,6 +10,7 @@ class LoadInit {
 						object.receiveShadow = true;
 					}
 				});
+				this.model.add(Scene.camera);
    				this.model.children[0].scale.multiplyScalar(2.6);
     			this.model.children[0].position.y -= 0.36;
 

@@ -3,8 +3,9 @@ class SceneInit {
 		this.scene = new THREE.Scene();
 		this.scene.background = new THREE.Color(0xa0a0a0);
 
-		this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 100);
-		this.camera.position.set(0, 5, 10);
+		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 1, 100);
+		this.camera.position.set(-5, 5, -10);
+		this.camera.lookAt(this.scene.position);
 		/* To visualize physic car */
 		this.geometry = new THREE.BoxGeometry(2, 0.6, 4);
 		this.material = new THREE.MeshBasicMaterial({color: 0xff0048, transparent: true, opacity: 0.4, side: THREE.DoubleSide});
@@ -34,7 +35,7 @@ class SceneInit {
 	    light.castShadow = true;
 	    light.position.set(10, 50, 10)
 
-		/* Set up shadow properties for the shadow casting directional light */
+		/* set up shadow properties for the shadow casting directional light */
 		light.shadow.mapSize.width = 1024;
 		light.shadow.mapSize.height = 1024;
 		light.shadow.camera.near = 0.5;
@@ -54,7 +55,6 @@ class SceneInit {
 	}
 	setControls() {		
 		let controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
-		controls.target.set(0, 1, 0);
 		controls.update();
 	}
 	visualizeWheels(wheel, wheelVisuals) {

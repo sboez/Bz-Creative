@@ -24,7 +24,6 @@ class PhysicsInit {
 		});
 		this.world.addContactMaterial(this.wheelGroundContactMaterial);
 
-
 		this.createCar();
 		this.createWheels(this.wheelMaterial);
 	}

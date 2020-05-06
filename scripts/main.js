@@ -1,8 +1,9 @@
-let wheelBodies = [];
-let wheelVisuals = [];
+let Scene, Physic, Load;
+let wheelBodies = [], wheelVisuals = [];
 
-function letsPlay() {
+async function letsPlay() {
 	init();
+	await Load.loadFile('assets/models/street_car.glb');
 	animate();
 }
 
@@ -10,20 +11,25 @@ function init() {
 	Scene = new SceneInit();
 	Scene.createScene();
 
+	Load = new LoadInit();
+
 	Physic = new PhysicsInit();
 	Physic.createWorld();
 
 	/* update the wheels to match the physics */
 	Physic.world.addEventListener('postStep', function() {
-		for (var i=0; i<Physic.vehicle.wheelInfos.length; i++) {
+		for (var i = 0; i < Physic.vehicle.wheelInfos.length; ++i) {
 			Physic.vehicle.updateWheelTransform(i);
-			var t = Physic.vehicle.wheelInfos[i].worldTransform;
+			let t = Physic.vehicle.wheelInfos[i].worldTransform;
 			/* update wheel physics */
 			wheelBodies[i].position.copy(t.position);
 			wheelBodies[i].quaternion.copy(t.quaternion);
 			/* update wheel visuals */
 			wheelVisuals[i].position.copy(t.position);
 			wheelVisuals[i].quaternion.copy(t.quaternion);
+			/* update wheel model */
+			Load.model.children[0].children[i].position.copy(t.position);
+			Load.model.children[0].children[i].position.copy(t.quaternion);
 		}
 	});
 	document.body.appendChild(Scene.renderer.domElement);
@@ -43,6 +49,9 @@ function updatePhysics() {
   /* update the chassis position */
   Scene.box.position.copy(Physic.chassisBody.position);
   Scene.box.quaternion.copy(Physic.chassisBody.quaternion);
+
+  Load.model.position.copy(Physic.chassisBody.position);
+  Load.model.quaternion.copy(Physic.chassisBody.quaternion);
 }
 
 function animate() {

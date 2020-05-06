@@ -3,17 +3,16 @@ class LoadInit {
 		return new Promise((resolve) => {
 			const loader = new THREE.GLTFLoader()
 			loader.load(path, (gltf) => {
-				this.model = gltf.scene;
-				this.model.traverse((object) => {
+				gltf.scene.traverse((object) => {
 					if (object.isMesh) {
 						object.castShadow = true;
 						object.receiveShadow = true;
 					}
 				});
-				this.model.scale.multiplyScalar(1);
+   				gltf.scene.children[0].scale.multiplyScalar(2.6);
+    			gltf.scene.children[0].position.y -= 0.63;
+				this.model = gltf.scene;
 				Scene.scene.add(this.model);
-
-				this.animation = gltf.animations;
 				resolve(this.model);
 			});
 		});

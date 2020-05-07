@@ -7,11 +7,16 @@ class SceneInit {
 		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 1, 100);
 		this.camera.position.set(-5, 5, -10);
 		this.camera.lookAt(this.scene.position);
+
+		/* to enable orbitcontrols car model */
+		this.fakeCamera = this.camera.clone();
+
 		/* to visualize physic car */
 		this.geometry = new THREE.BoxGeometry(2, 0.6, 4);
 		this.material = new THREE.MeshBasicMaterial({color: 0xff0048, transparent: true, opacity: 0.4, side: THREE.DoubleSide});
 		this.box = new THREE.Mesh(this.geometry, this.material);
 		// this.scene.add(this.box);
+
 		/* to visualize physic moto */
 		this.geoMoto = new THREE.BoxGeometry(0.6, 3, 3);
 		this.matMoto = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.4});
@@ -32,8 +37,7 @@ class SceneInit {
 		this.setRenderer();
 		this.setControls();
 	}
-	setLights() 
-	{
+	setLights() {
 		let hemlight = new THREE.HemisphereLight(0xffffff, 0x404040, 1); 
 		this.scene.add(hemlight);
 
@@ -51,6 +55,11 @@ class SceneInit {
 		light.shadow.camera.top = light.shadow.camera.right = mapArea
 		light.shadow.bias = -0.001
 		this.scene.add(light);
+
+		/* point lights */
+		this.pointLights = new THREE.PointLight(0xffffff, 10, 6);
+		this.pointLights.position.set(10, 5, 20);
+		this.scene.add(this.pointLights);
 	}
 	setRenderer() {
 		this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -60,7 +69,7 @@ class SceneInit {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 	}
 	setControls() {		
-		let controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+		let controls = new THREE.OrbitControls(this.fakeCamera, this.renderer.domElement);
 		controls.update();
 	}
 	visualizeWheels(wheel, wheelVisuals) {

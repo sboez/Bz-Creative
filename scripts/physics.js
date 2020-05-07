@@ -5,6 +5,7 @@ class PhysicsInit {
 		this.world.broadphase = new CANNON.SAPBroadphase(this.world);
 		this.world.gravity.set(0, -10, 0);
 		this.world.defaultContactMaterial.friction = 0;
+
 		/* set floor */ 
 		this.groundShape = new CANNON.Plane();
 		this.groundBody = new CANNON.Body({
@@ -14,6 +15,7 @@ class PhysicsInit {
 		this.groundBody.addShape(this.groundShape);
 		this.groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
 		this.world.addBody(this.groundBody);
+
 		/* set materials */
 		this.groundMaterial = new CANNON.Material('groundMaterial');
 		this.wheelMaterial = new CANNON.Material('wheelMaterial');
@@ -39,6 +41,7 @@ class PhysicsInit {
 		this.chassisBody = new CANNON.Body({ mass: 30 });
 		this.chassisBody.addShape(this.chassisShape);
 		this.chassisBody.angularVelocity.set(0, 0, 0);
+
 		/* parent vehicle object */
 		this.vehicle = new CANNON.RaycastVehicle({
 		  chassisBody: this.chassisBody,

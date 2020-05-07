@@ -6,6 +6,7 @@ async function letsPlay() {
 	await Load.loadFile('assets/models/street_car.glb');
 	await Load.loadOther('assets/models/motorbike.glb');
 	Load.other.userData = { URL: "https://github.com/sboez" };
+	console.log(Load.other);
 	animate();
 }
 
@@ -50,6 +51,7 @@ function onWindowResize() {
 
 function updatePhysics() {
 	Physic.world.step(1 / 60);
+	
 	/* update the chassis position */
 	Scene.box.position.copy(Physic.chassisBody.position);
 	Scene.box.quaternion.copy(Physic.chassisBody.quaternion);
@@ -62,6 +64,7 @@ function updatePhysics() {
 }
 
 function animate() {
+	Scene.camera.copy(Scene.fakeCamera);
 	requestAnimationFrame(animate);
 	Scene.renderer.render(Scene.scene, Scene.camera);
 	updatePhysics();

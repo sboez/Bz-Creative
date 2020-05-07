@@ -4,6 +4,8 @@ let wheelBodies = [], wheelVisuals = [];
 async function letsPlay() {
 	init();
 	await Load.loadFile('assets/models/street_car.glb');
+	await Load.loadOther('assets/models/motorbike.glb');
+	Load.other.userData = { URL: "https://github.com/sboez" };
 	animate();
 }
 
@@ -32,7 +34,6 @@ function init() {
 			Scene.scene.attach(w);
 			w.quaternion.copy(t.quaternion);
 			w.position.copy(wheelBodies[i].position);
-			w.parent.attach(w)
 		}
 	});
 	document.body.appendChild(Scene.renderer.domElement);
@@ -48,25 +49,22 @@ function onWindowResize() {
 }
 
 function updatePhysics() {
-  Physic.world.step(1 / 60);
-  /* update the chassis position */
-  Scene.box.position.copy(Physic.chassisBody.position);
-  Scene.box.quaternion.copy(Physic.chassisBody.quaternion);
+	Physic.world.step(1 / 60);
+	/* update the chassis position */
+	Scene.box.position.copy(Physic.chassisBody.position);
+	Scene.box.quaternion.copy(Physic.chassisBody.quaternion);
 
-  Load.model.position.copy(Physic.chassisBody.position);
-  Load.model.quaternion.copy(Physic.chassisBody.quaternion);
+	Load.model.position.copy(Physic.chassisBody.position);
+	Load.model.quaternion.copy(Physic.chassisBody.quaternion);
 
-  // Load.model.position.copy(Physic.vehicle.position);
-  // Load.model.quaternion.copy(Physic.vehicle.quaternion);
-
-  Scene.meshBoxTest.position.copy(Physic.bodyTest.position);
-  Scene.meshBoxTest.quaternion.copy(Physic.bodyTest.quaternion);
+	Load.other.position.copy(Physic.bodyMoto.position);
+	Load.other.quaternion.copy(Physic.bodyMoto.quaternion);
 }
 
 function animate() {
-  requestAnimationFrame(animate);
-  Scene.renderer.render(Scene.scene, Scene.camera);
-  updatePhysics();
+	requestAnimationFrame(animate);
+	Scene.renderer.render(Scene.scene, Scene.camera);
+	updatePhysics();
 }
 
 letsPlay();

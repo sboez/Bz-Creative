@@ -1,23 +1,29 @@
 class SceneInit {
 	createScene() {
 		this.scene = new THREE.Scene();
-		this.scene.background = new THREE.Color(0xa0a0a0);
+		this.scene.fog = new THREE.Fog(0x6f609b, 10, 80);
+		this.scene.background = new THREE.Color(0x6f609b);
 
 		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 1, 100);
 		this.camera.position.set(-5, 5, -10);
 		this.camera.lookAt(this.scene.position);
-		/* To visualize physic car */
+		/* to visualize physic car */
 		this.geometry = new THREE.BoxGeometry(2, 0.6, 4);
 		this.material = new THREE.MeshBasicMaterial({color: 0xff0048, transparent: true, opacity: 0.4, side: THREE.DoubleSide});
 		this.box = new THREE.Mesh(this.geometry, this.material);
 		// this.scene.add(this.box);
-		/* Box colision test */
-		this.geoTest = new THREE.BoxGeometry(2, 2, 2);
-		this.matTest = new THREE.MeshBasicMaterial({ color: 0x00ff48, transparent: true, opacity: 0.2});
-		this.meshBoxTest = new THREE.Mesh(this.geoTest, this.matTest);
-		this.scene.add(this.meshBoxTest);
-
-		this.plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(100, 100), new THREE.MeshPhongMaterial({ color: 0xbfbfbf, side: THREE.DoubleSide }));
+		/* to visualize physic moto */
+		this.geoMoto = new THREE.BoxGeometry(0.6, 3, 3);
+		this.matMoto = new THREE.MeshBasicMaterial({ color: 0x0000ff, transparent: true, opacity: 0.4});
+		this.meshMoto = new THREE.Mesh(this.geoMoto, this.matMoto);
+		// this.scene.add(this.meshMoto);
+		this.plane = new THREE.Mesh(new THREE.PlaneBufferGeometry(100, 100), new THREE.MeshPhongMaterial({
+			color: 0x444463,
+			emissive: 0x666666,
+			specular: 0x666666,
+			shininess: 8,
+			side: THREE.DoubleSide
+		}));
 		this.plane.receiveShadow = true;
 		this.plane.rotation.x = Math.PI / 2;
 		this.scene.add(this.plane);
@@ -31,9 +37,9 @@ class SceneInit {
 		let hemlight = new THREE.HemisphereLight(0xffffff, 0x404040, 1); 
 		this.scene.add(hemlight);
 
-		let light = new THREE.DirectionalLight(0xffffff, .1); 
-	    light.castShadow = true;
-	    light.position.set(10, 50, 10)
+		let light = new THREE.DirectionalLight(0xffffff, .1);
+		light.castShadow = true;
+		light.position.set(10, 50, 10)
 
 		/* set up shadow properties for the shadow casting directional light */
 		light.shadow.mapSize.width = 1024;

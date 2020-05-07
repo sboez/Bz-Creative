@@ -6,7 +6,7 @@ function keyboardEvent(e) {
 	Physic.vehicle.setBrake(0, 2);
 	Physic.vehicle.setBrake(0, 3);
 
-	let engineForce = 800;
+	let engineForce = 300;
 	let maxSteerVal = 0.3;
 	switch(e.keyCode) {
 		case 87: /* forward - W */
@@ -27,6 +27,10 @@ function keyboardEvent(e) {
 		case 65: /* left - A */
 		Physic.vehicle.setSteeringValue(keyup ? 0 : maxSteerVal, 2);
 		Physic.vehicle.setSteeringValue(keyup ? 0 : maxSteerVal, 3);
+		break;
+
+		case 13: /* enter */
+		window.open(Load.other.userData.URL);
 		break;
 	}
 }

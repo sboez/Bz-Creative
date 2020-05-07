@@ -72,18 +72,4 @@ class SceneInit {
 		let controls = new THREE.OrbitControls(this.fakeCamera, this.renderer.domElement);
 		controls.update();
 	}
-	visualizeWheels(wheel, wheelVisuals) {
-		this.geoWheels = new THREE.CylinderGeometry(wheel.radius, wheel.radius, 0.3, 32);
-		this.matWheels = new THREE.MeshBasicMaterial({
-			color: 0xd0901d,
-			transparent: true, 
-			opacity: 0.8,
-			wireframe: true,
-			side: THREE.DoubleSide,
-		});
-		this.cylinder = new THREE.Mesh(this.geoWheels, this.matWheels);
-		this.geoWheels.rotateZ(Math.PI / 2);
-		wheelVisuals.push(this.cylinder);
-		this.scene.add(this.cylinder);
-	}
 }

@@ -94,7 +94,6 @@ class PhysicsInit {
 			q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
 			body.addShape(shape, new CANNON.Vec3(), q);
 			wheelBodies.push(body);
-			Scene.visualizeWheels(wheel, wheelVisuals);
 		});
 	}
 	createMoto() {

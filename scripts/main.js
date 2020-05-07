@@ -6,7 +6,6 @@ async function letsPlay() {
 	await Load.loadFile('assets/models/street_car.glb');
 	await Load.loadOther('assets/models/motorbike.glb');
 	Load.other.userData = { URL: "https://github.com/sboez" };
-	console.log(Load.other);
 	animate();
 }
 
@@ -27,9 +26,6 @@ function init() {
 			/* update wheel physics */
 			wheelBodies[i].position.copy(t.position);
 			wheelBodies[i].quaternion.copy(t.quaternion);
-			/* update wheel visuals */
-			wheelVisuals[i].position.copy(t.position);
-			wheelVisuals[i].quaternion.copy(t.quaternion);
 			/* update wheel model */
 			let w = Load.wheelMeshes[i];
 			Scene.scene.attach(w);
@@ -37,6 +33,7 @@ function init() {
 			w.position.copy(wheelBodies[i].position);
 		}
 	});
+
 	document.body.appendChild(Scene.renderer.domElement);
 	window.addEventListener('resize', onWindowResize, false);
 	window.addEventListener('keydown', keyboardEvent)
@@ -51,7 +48,7 @@ function onWindowResize() {
 
 function updatePhysics() {
 	Physic.world.step(1 / 60);
-	
+
 	/* update the chassis position */
 	Scene.box.position.copy(Physic.chassisBody.position);
 	Scene.box.quaternion.copy(Physic.chassisBody.quaternion);

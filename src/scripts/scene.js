@@ -1,10 +1,13 @@
-class SceneInit {
+import * as THREE from 'three';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
+export default class SceneInit {
 	createScene() {
 		this.scene = new THREE.Scene();
 		this.scene.fog = new THREE.Fog(0x6f609b, 10, 80);
 		this.scene.background = new THREE.Color(0x6f609b);
 
-		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 1, 100);
+		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1);
 		this.camera.position.set(-5, 5, -10);
 		this.camera.lookAt(this.scene.position);
 
@@ -57,9 +60,9 @@ class SceneInit {
 		this.scene.add(light);
 
 		/* point lights */
-		this.pointLights = new THREE.PointLight(0xffffff, 10, 6);
-		this.pointLights.position.set(10, 5, 20);
-		this.scene.add(this.pointLights);
+		this.pointLight = new THREE.PointLight(0xffffff, 10, 6);
+		this.pointLight.position.set(10, 5, 20);
+		this.scene.add(this.pointLight);
 	}
 	setRenderer() {
 		this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -69,7 +72,7 @@ class SceneInit {
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 	}
 	setControls() {		
-		let controls = new THREE.OrbitControls(this.fakeCamera, this.renderer.domElement);
+		let controls = new OrbitControls(this.fakeCamera, this.renderer.domElement);
 		controls.update();
 	}
 }

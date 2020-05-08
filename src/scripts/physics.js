@@ -1,4 +1,6 @@
-class PhysicsInit {
+import CANNON from 'cannon'
+
+export default class PhysicsInit {
 	createWorld() {
 		/* set the world */
 		this.world = new CANNON.World();

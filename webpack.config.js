@@ -20,5 +20,26 @@ module.exports = {
 		contentBase: path.resolve(__dirname, 'dist'),
 		port: 9000, 
 		historyApiFallback: true
-	}
+	},
+	 module:
+    {
+        rules:
+        [
+             // Models
+            {
+                test: /\.(glb|gltf)$/,
+                use:
+                [
+                    {
+                        loader: 'file-loader',
+                        options:
+                        {
+                            outputPath: 'assets/models/'
+                        }
+                    }
+                ]
+            },
+        ]
+    }
+
 };

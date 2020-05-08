@@ -1,29 +1,54 @@
 import * as THREE from 'three';
 import SceneInit from './scene';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 // import PhysicsInit from './physics';
 import LoadInit from './load';
-import KeyInit from './keyboardEvent';
+// import KeyInit from './keyboardEvent';
 
-let Scene, Physic, Load, Key;
+let Physic, Load, Key;
 let wheelBodies = [], wheelVisuals = [];
 
 async function letsPlay() {
 	init();
-	// await Load.loadFile('assets/models/street_car.glb');
+
+	await Load.loadFile('assets/models/street_car.glb');
 	// await Load.loadOther('src/assets/models/motorbike.glb');
 	// Load.other.userData = { URL: "https://github.com/sboez" };
 	animate();
 }
 
 function init() {
-	Scene = new SceneInit();
+	new SceneInit(Scene);
 	Scene.createScene();
 
 	Load = new LoadInit();
-	Key = new KeyInit();
+	// Key = new KeyInit();
 
 	// Physic = new PhysicsInit();
 	// Physic.createWorld();
+
+	// const loader = new GLTFLoader();
+	// loader.load('/assets/models/street_car.glb', (gltf) => {
+		// model = gltf.scene;
+		// model.traverse((object) => {
+		// 	if (object.isMesh) {
+		// 		object.castShadow = true;
+		// 		object.receiveShadow = true;
+		// 	}
+		// });
+		// this.model.add(Scene.camera);
+		// this.model.children[0].scale.multiplyScalar(2.6);
+		// this.model.children[0].position.y -= 0.36;
+
+		// this.wheelMeshes = [
+		// 	gltf.scene.getChildByName("SR_Veh_Wheel_FL"),
+		// 	gltf.scene.getChildByName("SR_Veh_Wheel_FR"),
+		// 	gltf.scene.getChildByName("SR_Veh_Wheel_RL"),
+		// 	gltf.scene.getChildByName("SR_Veh_Wheel_RR")
+		// ];
+		// Scene.scene.add(gltf.scene);
+		// resolve(model);
+	// });
 
 	/* update the wheels to match the physics */
 	// Physic.world.addEventListener('postStep', function() {
@@ -66,8 +91,8 @@ function init() {
 
 	document.body.appendChild(Scene.renderer.domElement);
 	window.addEventListener('resize', onWindowResize, false);
-	window.addEventListener('keydown', Key.keyboardEvent);
-	window.addEventListener('keyup', Key.keyboardEvent);
+	// window.addEventListener('keydown', Key.keyboardEvent);
+	// window.addEventListener('keyup', Key.keyboardEvent);
 }
 
 function onWindowResize() {

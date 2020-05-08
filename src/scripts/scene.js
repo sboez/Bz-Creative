@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 export default class SceneInit {
+	constructor(Scene) {
+		this.Scene = Scene;
+	}
 	createScene() {
 		this.scene = new THREE.Scene();
 		this.scene.fog = new THREE.Fog(0x6f609b, 10, 80);

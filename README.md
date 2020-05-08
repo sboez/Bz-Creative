@@ -14,10 +14,12 @@ Open source website BzCreative, coming soon.
 
 ## Usage
 
+Install dependencies :
 ```
-git clone https://github.com/sboez/Bz-Creative.git
+npm install
 ```
 
+Run local server :
 ```
-python -m SimpleHTTPServer
+npm start
 ```

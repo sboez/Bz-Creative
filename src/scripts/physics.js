@@ -85,7 +85,7 @@ export default class Physics {
 		}));
 
 		this.world.addContactMaterial(new CANNON.ContactMaterial(this.wheelMaterial, this.groundMaterial, {
-		    friction: 0.3,
+		    friction: 0.5,
 		    restitution: 0
 		}));
 
@@ -113,7 +113,7 @@ export default class Physics {
 	createWheels(wheelMaterial) {
 		const axlewidth = 0.85;
 		const chassisLength = 1.05
-		
+
 		this.options.chassisConnectionPointLocal.set(axlewidth, 0, -chassisLength);
 		this.vehicle.addWheel(this.options);
 
@@ -125,7 +125,7 @@ export default class Physics {
 
 		this.options.chassisConnectionPointLocal.set(-axlewidth, 0, chassisLength);
 		this.vehicle.addWheel(this.options);
-
+		
 		this.vehicle.addToWorld(this.world);
 
 		/* car wheels */

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import Stats from 'stats.js';
 import Scene from './scene';
 import Physics from './physics';
 import Load from './load';
@@ -37,6 +38,10 @@ class App {
 
 		this.key = new Key(this.physic, this.load);
 
+		this.stats = new Stats();
+		this.stats.showPanel(0);
+
+		document.body.appendChild(this.stats.dom);
 		document.body.appendChild(this.scene.renderer.domElement);
 		window.addEventListener('resize', this.onWindowResize.bind(this), false);
 	}
@@ -49,19 +54,21 @@ class App {
 	
 	updatePhysics() {
 		this.physic.world.step(1 / 60);
-	
-		/* update chassis position */
-		this.scene.box.position.copy(this.physic.chassisBody.position);
-		this.scene.box.quaternion.copy(this.physic.chassisBody.quaternion);
-	
+
+		/* update chassis position */	
 		this.load.model.position.copy(this.physic.chassisBody.position);
 		this.load.model.quaternion.copy(this.physic.chassisBody.quaternion);
 	
 		this.load.other.position.copy(this.physic.bodyMoto.position);
 		this.load.other.quaternion.copy(this.physic.bodyMoto.quaternion);
+
+		this.load.other.matrixAutoUpdate = false;
+		this.load.other.updateMatrix();
 	}
 
 	animate() {
+		this.stats.begin();
+
 		/* check if car position is near to moto */
 		if (this.load.model.position.z >= 15) {
 			this.scene.pointLight.color.set(0xffffff);
@@ -71,11 +78,13 @@ class App {
 			this.scene.pointLight.color.set(0x000000);
 			this.text.mesh.visible = false;
 		}
-		
+
 		this.scene.camera.copy(this.scene.fakeCamera);
 		requestAnimationFrame(this.animate.bind(this));
 		this.scene.renderer.render(this.scene, this.scene.camera);
 		this.updatePhysics();
+
+		this.stats.end();
 	}
 }
 

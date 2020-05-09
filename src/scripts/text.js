@@ -9,12 +9,11 @@ export default class Text {
 	}
 	setEnter() {
 		const loader = new THREE.FontLoader();
-		loader.load('assets/fonts/helvetiker_regular.typeface.json', font => {
+		loader.load('assets/fonts/Roboto_Regular.json', font => {
 			this.textGeo = new THREE.TextGeometry('Enter', {
 			    font: font,
-			    size: 0.2,
-			    height: 0.05,
-			    curveSegments: 1
+			    size: 0.25,
+			    height: 0.05
 			});
 			this.textGeo.center();
 			this.material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
@@ -22,6 +21,7 @@ export default class Text {
 			this.mesh.position.set(this.physic.bodyMoto.position.x, this.physic.bodyMoto.position.y + 2, this.physic.bodyMoto.position.z);
 			this.mesh.rotation.y = Math.PI;
 			this.mesh.visible = false;
+
 			this.scene.add(this.mesh);
 		});
 	}

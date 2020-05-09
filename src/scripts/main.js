@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
+import TweenLite from 'gsap';
 import Stats from 'stats.js';
 import Scene from './scene';
 import Physics from './physics';
@@ -73,10 +75,12 @@ class App {
 		if (this.load.model.position.z >= 15) {
 			this.scene.pointLight.color.set(0xffffff);
 			this.text.mesh.visible = true;
+			TweenLite.to(this.text.mesh.position, 4, {y: 3});
 		}
 		else {
 			this.scene.pointLight.color.set(0x000000);
 			this.text.mesh.visible = false;
+			TweenLite.to(this.text.mesh.position, 1, {y: 2});
 		}
 
 		this.scene.camera.copy(this.scene.fakeCamera);

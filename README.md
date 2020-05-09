@@ -9,9 +9,9 @@ Open source website BzCreative, coming soon.
 
 ## Challenge 
 
-**Physics :** Three.js doesn't have physic engine but several lib exists, I choose [cannon.js](https://github.com/schteppe/cannon.js) for its simplicity compared to others. Adding physics to a 3D model is tricky.
+:rocket: **Physics :** Three.js doesn't have physic engine but several lib exists, I choose [cannon.js](https://github.com/schteppe/cannon.js) for its simplicity compared to others. Adding physics to a 3D model is tricky.
 
-**Webpack :** I'm not familiary yet with this, config was tedious but finally it works !
+:package: **Webpack :** I'm not familiary with this yet, config was tedious but finally it works !
 
 
 ## Usage

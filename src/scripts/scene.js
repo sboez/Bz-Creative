@@ -44,6 +44,7 @@ export default class Scene extends THREE.Scene {
 		this.setRenderer();
 		this.setControls();
 	}
+
 	setLights() {
 		let hemlight = new THREE.HemisphereLight(0xffffff, 0x404040, 1); 
 		this.add(hemlight);
@@ -57,7 +58,7 @@ export default class Scene extends THREE.Scene {
 		light.shadow.mapSize.height = 1024;
 		light.shadow.camera.near = 0.5;
 		light.shadow.camera.far = 500;
-		let mapArea = 100
+		const mapArea = 100
 		light.shadow.camera.left = light.shadow.camera.bottom = -mapArea
 		light.shadow.camera.top = light.shadow.camera.right = mapArea
 		light.shadow.bias = -0.001
@@ -68,6 +69,7 @@ export default class Scene extends THREE.Scene {
 		this.pointLight.position.set(10, 5, 20);
 		this.add(this.pointLight);
 	}
+
 	setRenderer() {
 		this.renderer = new THREE.WebGLRenderer({ antialias: true });
 		this.renderer.shadowMap.enabled = true;
@@ -75,6 +77,7 @@ export default class Scene extends THREE.Scene {
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 	}
+
 	setControls() {		
 		let controls = new OrbitControls(this.fakeCamera, this.renderer.domElement);
 		controls.update();

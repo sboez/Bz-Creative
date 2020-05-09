@@ -2,13 +2,15 @@ import * as THREE from 'three';
 import Scene from './scene';
 import Physics from './physics';
 import Load from './load';
-import KeyInit from './keyboardEvent';
+import Text from './text';
+import Key from './keyboardEvent';
 
 class App {
 	constructor() {
 		this.scene = null;
 		this.load = null;
 		this.physic = null;
+		this.text = null;
 		this.key = null;
 
 		this.letsPlay();
@@ -30,8 +32,11 @@ class App {
 		this.load = new Load(this.scene);
 		
 		this.physic = new Physics(this.scene, this.load);
-		this.key = new KeyInit(this.physic);
-	
+
+		this.text = new Text(this.scene, this.physic);
+
+		this.key = new Key(this.physic, this.load);
+
 		document.body.appendChild(this.scene.renderer.domElement);
 		window.addEventListener('resize', this.onWindowResize.bind(this), false);
 	}
@@ -57,7 +62,16 @@ class App {
 	}
 
 	animate() {
-		this.load.model.position.z >= 15 ? this.scene.pointLight.color.set(0xffffff) : this.scene.pointLight.color.set(0x000000);
+		/* check if car position is near to moto */
+		if (this.load.model.position.z >= 15) {
+			this.scene.pointLight.color.set(0xffffff);
+			this.text.mesh.visible = true;
+		}
+		else {
+			this.scene.pointLight.color.set(0x000000);
+			this.text.mesh.visible = false;
+		}
+		
 		this.scene.camera.copy(this.scene.fakeCamera);
 		requestAnimationFrame(this.animate.bind(this));
 		this.scene.renderer.render(this.scene, this.scene.camera);

@@ -1,6 +1,7 @@
-export default class KeyInit {
-	constructor(physic) {
+export default class Key {
+	constructor(physic, load) {
 		this.physic = physic;
+		this.load = load;
 
 		this.listen();
 	}
@@ -43,7 +44,7 @@ export default class KeyInit {
 				break;
 
 			case 13: /* enter */
-				window.open(Load.other.userData.URL);
+				window.open(this.load.other.userData.URL);
 				break;
 		}
 	}

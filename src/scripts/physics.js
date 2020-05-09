@@ -1,6 +1,62 @@
 import CANNON from 'cannon'
 
-export default class PhysicsInit {
+export default class Physics {
+	constructor(scene, load) {
+		this.scene = scene;
+		this.load = load;
+
+		this.options = null;
+		this.world = null;
+		this.groundShape = null;
+		this.groundBody = null;
+
+		this.vehicle = null;
+		this.wheelBodies = [];
+
+		this.createOptions();
+		this.createWorld();
+		this.listen();
+	}
+
+	createOptions() {
+		this.options = {
+			radius: 0.35,
+			directionLocal: new CANNON.Vec3(0, -1, 0),
+			axleLocal: new CANNON.Vec3(-1, 0, 0),
+			chassisConnectionPointLocal: new CANNON.Vec3(0, 1, 0),
+			frontOffsetDepth: 0.635,
+			backOffsetDepth: -0.475,
+			offsetWidth: 0.39,
+			height: 0.24,
+			suspensionStiffness: 25,
+			suspensionRestLength: 0.1,
+			frictionSlip: 1,
+			dampingRelaxation: 1.8,
+			dampingCompression: 1.5,
+			maxSuspensionForce: 100000,
+			rollInfluence:  0,
+			maxSuspensionTravel: 0.2
+		};
+	}
+
+	listen() {
+		/* update the wheels to match the physics */
+		this.world.addEventListener('postStep', () => {
+			for (let i = 0; i < this.vehicle.wheelInfos.length; ++i) {
+				this.vehicle.updateWheelTransform(i);
+				const t = this.vehicle.wheelInfos[i].worldTransform;
+				/* update wheel physics */
+				this.wheelBodies[i].position.copy(t.position);
+				this.wheelBodies[i].quaternion.copy(t.quaternion);
+				/* update wheel model */
+				const w = this.load.wheelMeshes[i];
+				this.scene.attach(w);
+				w.quaternion.copy(t.quaternion);
+				w.position.copy(this.wheelBodies[i].position);
+			}
+		});
+	}
+
 	createWorld() {
 		/* set the world */
 		this.world = new CANNON.World();
@@ -37,6 +93,7 @@ export default class PhysicsInit {
 		this.createWheels(this.wheelMaterial);
 		this.createMoto();
 	}
+
 	createCar() {
 		/* car physics body */
 		this.chassisShape = new CANNON.Box(new CANNON.Vec3(1, .3, 2));
@@ -52,28 +109,11 @@ export default class PhysicsInit {
 		  indexForwardAxis: 2, // z
 		});
 	}
-	createWheels(wheelMaterial) {
-		this.options = {
-			radius: 0.35,
-			directionLocal: new CANNON.Vec3(0, -1, 0),
-			axleLocal: new CANNON.Vec3(-1, 0, 0),
-			chassisConnectionPointLocal: new CANNON.Vec3(0, 1, 0),
-			frontOffsetDepth: 0.635,
-			backOffsetDepth: -0.475,
-			offsetWidth: 0.39,
-			height: 0.24,
-			suspensionStiffness: 25,
-			suspensionRestLength: 0.1,
-			frictionSlip: 1,
-			dampingRelaxation: 1.8,
-			dampingCompression: 1.5,
-			maxSuspensionForce: 100000,
-			rollInfluence:  0,
-			maxSuspensionTravel: 0.2
-		};
 
-		let axlewidth = 0.85;
-		let chassisLength = 1.05
+	createWheels(wheelMaterial) {
+		const axlewidth = 0.85;
+		const chassisLength = 1.05
+		
 		this.options.chassisConnectionPointLocal.set(axlewidth, 0, -chassisLength);
 		this.vehicle.addWheel(this.options);
 
@@ -89,15 +129,16 @@ export default class PhysicsInit {
 		this.vehicle.addToWorld(this.world);
 
 		/* car wheels */
-		this.vehicle.wheelInfos.forEach(function(wheel) {
-			let shape = new CANNON.Cylinder(wheel.radius, wheel.radius, 0.15, 20);
-			let body = new CANNON.Body({mass: 30, material: wheelMaterial});
-			let q = new CANNON.Quaternion();
+		this.vehicle.wheelInfos.forEach((wheel) => {
+			const shape = new CANNON.Cylinder(wheel.radius, wheel.radius, 0.15, 20);
+			const body = new CANNON.Body({mass: 30, material: wheelMaterial});
+			const q = new CANNON.Quaternion();
 			q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
 			body.addShape(shape, new CANNON.Vec3(), q);
-			wheelBodies.push(body);
+			this.wheelBodies.push(body);
 		});
 	}
+	
 	createMoto() {
 		this.shapeMoto = new CANNON.Box(new CANNON.Vec3(0.3, 1.5, 1.5));
 		this.bodyMoto = new CANNON.Body({ mass: 0, material: this.objectMaterial });

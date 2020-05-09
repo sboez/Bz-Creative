@@ -1,38 +1,50 @@
 export default class KeyInit {
-	keyboardEvent(e) {
-		if (e.type != 'keydown' && e.type != 'keyup') return;
-		let keyup = e.type == 'keyup';
-		Physic.vehicle.setBrake(0, 0);
-		Physic.vehicle.setBrake(0, 1);
-		Physic.vehicle.setBrake(0, 2);
-		Physic.vehicle.setBrake(0, 3);
+	constructor(physic) {
+		this.physic = physic;
 
-		let engineForce = 300;
-		let maxSteerVal = 0.3;
+		this.listen();
+	}
+
+	listen() {
+		window.addEventListener('keydown', this.keyboardEvent.bind(this));
+		window.addEventListener('keyup', this.keyboardEvent.bind(this));
+	}
+
+	keyboardEvent(e) {
+		if (e.type !== 'keydown' && e.type !== 'keyup') return;
+		const isKeyup = e.type === 'keyup';
+
+		this.physic.vehicle.setBrake(0, 0);
+		this.physic.vehicle.setBrake(0, 1);
+		this.physic.vehicle.setBrake(0, 2);
+		this.physic.vehicle.setBrake(0, 3);
+
+		const engineForce = 300;
+		const maxSteerVal = 0.3;
 		switch(e.keyCode) {
 			case 87: /* forward - W */
-			Physic.vehicle.applyEngineForce(keyup ? 0 : -engineForce, 2);
-			Physic.vehicle.applyEngineForce(keyup ? 0 : -engineForce, 3);
-			break;
+				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : -engineForce, 2);
+				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : -engineForce, 3);
+				break;
 
 			case 83: /* backward - S */
-			Physic.vehicle.applyEngineForce(keyup ? 0 : engineForce, 2);
-			Physic.vehicle.applyEngineForce(keyup ? 0 : engineForce, 3);
-			break;
+				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : engineForce, 2);
+				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : engineForce, 3);
+				break;
 
 			case 68: /* right - D */
-			Physic.vehicle.setSteeringValue(keyup ? 0 : -maxSteerVal, 2);
-			Physic.vehicle.setSteeringValue(keyup ? 0 : -maxSteerVal, 3);
-			break;
+				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : -maxSteerVal, 2);
+				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : -maxSteerVal, 3);
+				break;
 
 			case 65: /* left - A */
-			Physic.vehicle.setSteeringValue(keyup ? 0 : maxSteerVal, 2);
-			Physic.vehicle.setSteeringValue(keyup ? 0 : maxSteerVal, 3);
-			break;
+				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : maxSteerVal, 2);
+				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : maxSteerVal, 3);
+				break;
 
 			case 13: /* enter */
-			window.open(Load.other.userData.URL);
-			break;
+				window.open(Load.other.userData.URL);
+				break;
 		}
 	}
 }

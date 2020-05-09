@@ -25,7 +25,6 @@ module.exports = {
     {
         rules:
         [
-             // Models
             {
                 test: /\.(glb|gltf)$/,
                 use:

@@ -1,126 +1,68 @@
 import * as THREE from 'three';
-import SceneInit from './scene';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-// import PhysicsInit from './physics';
-import LoadInit from './load';
-// import KeyInit from './keyboardEvent';
+import Scene from './scene';
+import Physics from './physics';
+import Load from './load';
+import KeyInit from './keyboardEvent';
 
-let Physic, Load, Key;
-let wheelBodies = [], wheelVisuals = [];
+class App {
+	constructor() {
+		this.scene = null;
+		this.load = null;
+		this.physic = null;
+		this.key = null;
 
-async function letsPlay() {
-	init();
+		this.letsPlay();
+	}
 
-	await Load.loadFile('assets/models/street_car.glb');
-	// await Load.loadOther('src/assets/models/motorbike.glb');
-	// Load.other.userData = { URL: "https://github.com/sboez" };
-	animate();
-}
+	async letsPlay() {
+		this.init();
 
-function init() {
-	new SceneInit(Scene);
-	Scene.createScene();
+		await this.load.loadFile('assets/models/street_car.glb');
+		await this.load.loadOther('assets/models/motorbike.glb');
+		this.load.other.userData = { URL: "https://github.com/sboez" };
 
-	Load = new LoadInit();
-	// Key = new KeyInit();
-
-	// Physic = new PhysicsInit();
-	// Physic.createWorld();
-
-	// const loader = new GLTFLoader();
-	// loader.load('/assets/models/street_car.glb', (gltf) => {
-		// model = gltf.scene;
-		// model.traverse((object) => {
-		// 	if (object.isMesh) {
-		// 		object.castShadow = true;
-		// 		object.receiveShadow = true;
-		// 	}
-		// });
-		// this.model.add(Scene.camera);
-		// this.model.children[0].scale.multiplyScalar(2.6);
-		// this.model.children[0].position.y -= 0.36;
-
-		// this.wheelMeshes = [
-		// 	gltf.scene.getChildByName("SR_Veh_Wheel_FL"),
-		// 	gltf.scene.getChildByName("SR_Veh_Wheel_FR"),
-		// 	gltf.scene.getChildByName("SR_Veh_Wheel_RL"),
-		// 	gltf.scene.getChildByName("SR_Veh_Wheel_RR")
-		// ];
-		// Scene.scene.add(gltf.scene);
-		// resolve(model);
-	// });
-
-	/* update the wheels to match the physics */
-	// Physic.world.addEventListener('postStep', function() {
-	// 	for (let i = 0; i < Physic.vehicle.wheelInfos.length; ++i) {
-	// 		Physic.vehicle.updateWheelTransform(i);
-	// 		let t = Physic.vehicle.wheelInfos[i].worldTransform;
-	// 		/* update wheel physics */
-	// 		wheelBodies[i].position.copy(t.position);
-	// 		wheelBodies[i].quaternion.copy(t.quaternion);
-	// 		/* update wheel model */
-	// 		let w = Load.wheelMeshes[i];
-	// 		Scene.scene.attach(w);
-	// 		w.quaternion.copy(t.quaternion);
-	// 		w.position.copy(wheelBodies[i].position);
-	// 	}
-	// });
-
-	// var materialFront = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-	// var materialSide = new THREE.MeshBasicMaterial( { color: 0x000088 } );
-	// var materialArray = [ materialFront, materialSide ];
-	// var textGeom = new THREE.TextGeometry( "Hello, World!", 
-	// {
-	// 	size: 30, height: 4, curveSegments: 3,
-	// 	font: "helvetiker", weight: "bold", style: "normal",
-	// 	bevelThickness: 1, bevelSize: 2, bevelEnabled: true,
-	// 	material: 0, extrudeMaterial: 1
-	// });
-	// // font: helvetiker, gentilis, droid sans, droid serif, optimer
-	// // weight: normal, bold
+		this.animate();
+	}
 	
-	// var textMaterial = new THREE.MeshFaceMaterial(materialArray);
-	// var textMesh = new THREE.Mesh(textGeom, textMaterial );
+	init() {
+		this.scene = new Scene();
 	
-	// textGeom.computeBoundingBox();
-	// var textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
+		this.load = new Load(this.scene);
+		
+		this.physic = new Physics(this.scene, this.load);
+		this.key = new KeyInit(this.physic);
 	
-	// textMesh.position.set( -0.5 * textWidth, 50, 100 );
-	// textMesh.rotation.x = -Math.PI / 4;
-	// Scene.scene.add(textMesh);
+		document.body.appendChild(this.scene.renderer.domElement);
+		window.addEventListener('resize', this.onWindowResize.bind(this), false);
+	}
 
-	document.body.appendChild(Scene.renderer.domElement);
-	window.addEventListener('resize', onWindowResize, false);
-	// window.addEventListener('keydown', Key.keyboardEvent);
-	// window.addEventListener('keyup', Key.keyboardEvent);
+	onWindowResize() {
+		this.scene.camera.aspect = window.innerWidth / window.innerHeight;
+		this.scene.camera.updateProjectionMatrix();
+		this.scene.renderer.setSize(window.innerWidth, window.innerHeight);
+	}
+	
+	updatePhysics() {
+		this.physic.world.step(1 / 60);
+	
+		/* update chassis position */
+		this.scene.box.position.copy(this.physic.chassisBody.position);
+		this.scene.box.quaternion.copy(this.physic.chassisBody.quaternion);
+	
+		this.load.model.position.copy(this.physic.chassisBody.position);
+		this.load.model.quaternion.copy(this.physic.chassisBody.quaternion);
+	
+		this.load.other.position.copy(this.physic.bodyMoto.position);
+		this.load.other.quaternion.copy(this.physic.bodyMoto.quaternion);
+	}
+
+	animate() {
+		this.load.model.position.z >= 15 ? this.scene.pointLight.color.set(0xffffff) : this.scene.pointLight.color.set(0x000000);
+		this.scene.camera.copy(this.scene.fakeCamera);
+		requestAnimationFrame(this.animate.bind(this));
+		this.scene.renderer.render(this.scene, this.scene.camera);
+		this.updatePhysics();
+	}
 }
 
-function onWindowResize() {
-	Scene.camera.aspect = window.innerWidth / window.innerHeight;
-	Scene.camera.updateProjectionMatrix();
-	Scene.renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-// function updatePhysics() {
-// 	Physic.world.step(1 / 60);
-
-// 	/* update the chassis position */
-// 	Scene.box.position.copy(Physic.chassisBody.position);
-// 	Scene.box.quaternion.copy(Physic.chassisBody.quaternion);
-
-// 	Load.model.position.copy(Physic.chassisBody.position);
-// 	Load.model.quaternion.copy(Physic.chassisBody.quaternion);
-
-// 	Load.other.position.copy(Physic.bodyMoto.position);
-// 	Load.other.quaternion.copy(Physic.bodyMoto.quaternion);
-// }
-
-function animate() {
-	// Load.model.position.z >= 15 ? Scene.pointLight.color.set(0xffffff) : Scene.pointLight.color.set(0x000000);
-	// Scene.camera.copy(Scene.fakeCamera);
-	requestAnimationFrame(animate);
-	Scene.renderer.render(Scene.scene, Scene.camera);
-	// updatePhysics();
-}
-
-letsPlay();
+new App();

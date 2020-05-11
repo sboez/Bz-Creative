@@ -1,8 +1,10 @@
 import * as THREE from 'three';
+import TweenLite from 'gsap';
 
 export default class Text {
-	constructor(scene, physic) {
+	constructor(scene, lights, physic) {
 		this.scene = scene;
+		this.lights = lights;
 		this.physic = physic;
 
 		this.setEnter();
@@ -23,5 +25,19 @@ export default class Text {
 
 			this.scene.add(this.mesh);
 		});
+	}
+
+	checkDistance() {
+		/* check if car position is near to moto */
+		if (this.physic.chassisBody.position.z >= 15) {
+			this.lights.motoLight.color.set(0xffffff);
+			this.mesh.visible = true;
+			TweenLite.to(this.mesh.position, 4, {y: 3});
+		}
+		else {
+			this.lights.motoLight.color.set(0x000000);
+			this.mesh.visible = false;
+			TweenLite.to(this.mesh.position, 1, {y: 2});
+		}
 	}
 }

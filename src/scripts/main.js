@@ -1,8 +1,7 @@
 import * as THREE from 'three';
-import gsap from 'gsap';
-import TweenLite from 'gsap';
 import Stats from 'stats.js';
 import Scene from './scene';
+import Lights from './lights';
 import Physics from './physics';
 import Load from './load';
 import Text from './text';
@@ -11,6 +10,7 @@ import Key from './keyboardEvent';
 class App {
 	constructor() {
 		this.scene = null;
+		this.lights = null;
 		this.load = null;
 		this.physic = null;
 		this.text = null;
@@ -31,12 +31,14 @@ class App {
 	
 	init() {
 		this.scene = new Scene();
+
+		this.lights = new Lights(this.scene);
 	
 		this.load = new Load(this.scene);
 		
 		this.physic = new Physics(this.scene, this.load);
 
-		this.text = new Text(this.scene, this.physic);
+		this.text = new Text(this.scene, this.lights, this.physic);
 
 		this.key = new Key(this.physic, this.load);
 
@@ -71,22 +73,16 @@ class App {
 	animate() {
 		this.stats.begin();
 
-		/* check if car position is near to moto */
-		if (this.load.model.position.z >= 15) {
-			this.scene.pointLight.color.set(0xffffff);
-			this.text.mesh.visible = true;
-			TweenLite.to(this.text.mesh.position, 4, {y: 3});
-		}
-		else {
-			this.scene.pointLight.color.set(0x000000);
-			this.text.mesh.visible = false;
-			TweenLite.to(this.text.mesh.position, 1, {y: 2});
-		}
+		this.text.checkDistance();
 
 		this.scene.fakeCamera.lookAt(-2, 3, 0);
 		this.scene.camera.copy(this.scene.fakeCamera);
+
+		this.lights.renderAmbiance();
+
 		requestAnimationFrame(this.animate.bind(this));
 		this.scene.renderer.render(this.scene, this.scene.camera);
+
 		this.updatePhysics();
 
 		this.stats.end();

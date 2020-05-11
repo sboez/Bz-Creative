@@ -83,6 +83,7 @@ class App {
 			TweenLite.to(this.text.mesh.position, 1, {y: 2});
 		}
 
+		this.scene.fakeCamera.lookAt(-2, 3, 0);
 		this.scene.camera.copy(this.scene.fakeCamera);
 		requestAnimationFrame(this.animate.bind(this));
 		this.scene.renderer.render(this.scene, this.scene.camera);

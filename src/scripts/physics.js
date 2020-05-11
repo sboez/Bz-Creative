@@ -5,20 +5,14 @@ export default class Physics {
 		this.scene = scene;
 		this.load = load;
 
-		this.options = null;
-		this.world = null;
-		this.groundShape = null;
-		this.groundBody = null;
-
-		this.vehicle = null;
 		this.wheelBodies = [];
 
-		this.createOptions();
-		this.createWorld();
+		this.setOptions();
+		this.setWorld();
 		this.listen();
 	}
 
-	createOptions() {
+	setOptions() {
 		this.options = {
 			radius: 0.35,
 			directionLocal: new CANNON.Vec3(0, -1, 0),
@@ -39,6 +33,20 @@ export default class Physics {
 		};
 	}
 
+	setWorld() {
+		this.world = new CANNON.World();
+		this.world.broadphase = new CANNON.SAPBroadphase(this.world);
+		this.world.gravity.set(0, -10, 0);
+		this.world.defaultContactMaterial.friction = 0;
+
+		this.setMaterials();
+		this.setGround();
+		this.setwalls();
+		this.setCar();
+		this.setWheels(this.wheelMaterial);
+		this.setMoto();
+	}
+
 	listen() {
 		/* update the wheels to match the physics */
 		this.world.addEventListener('postStep', () => {
@@ -57,24 +65,7 @@ export default class Physics {
 		});
 	}
 
-	createWorld() {
-		/* set the world */
-		this.world = new CANNON.World();
-		this.world.broadphase = new CANNON.SAPBroadphase(this.world);
-		this.world.gravity.set(0, -10, 0);
-		this.world.defaultContactMaterial.friction = 0;
-
-		/* set floor */ 
-		this.groundShape = new CANNON.Plane();
-		this.groundBody = new CANNON.Body({
-			mass: 0, 
-			material: this.groundMaterial
-		});
-		this.groundBody.addShape(this.groundShape);
-		this.groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
-		this.world.addBody(this.groundBody);
-
-		/* set materials */
+	setMaterials() {
 		this.groundMaterial = new CANNON.Material('groundMaterial');
 		this.wheelMaterial = new CANNON.Material('wheelMaterial');
 		this.objectMaterial = new CANNON.Material('objectMaterial');
@@ -88,13 +79,46 @@ export default class Physics {
 		    friction: 0.5,
 		    restitution: 0
 		}));
-
-		this.createCar();
-		this.createWheels(this.wheelMaterial);
-		this.createMoto();
 	}
 
-	createCar() {
+	setGround() {
+		this.groundShape = new CANNON.Plane();
+		this.groundBody = new CANNON.Body({
+			mass: 0, 
+			material: this.groundMaterial
+		});
+		this.groundBody.addShape(this.groundShape);
+		this.groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+		this.world.addBody(this.groundBody);
+	}
+
+	setwalls() {
+		this.wallShape = [];
+		this.wallBody = [];
+		for (let i = 0; i < 4; ++i) {
+			this.wallShape[i] = new CANNON.Plane();
+			this.wallBody[i] = new CANNON.Body({
+				position: new CANNON.Vec3(30, 0, 0),
+				mass: 0, 
+				material: this.objectMaterial
+			});
+			this.wallBody[i].addShape(this.wallShape[i]);
+			this.world.add(this.wallBody[i]);
+		}
+
+		this.wallBody[0].quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -Math.PI / 2); // Left
+
+		this.wallBody[1].quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI / 2); // Right
+		this.wallBody[1].position.x = -30; 
+
+		this.wallBody[2].quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI * 2); // Back
+		this.wallBody[2].position.z = -30;
+
+		this.wallBody[3].quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI); // Front
+		this.wallBody[3].position.z = 30;
+	}
+
+	setCar() {
 		/* car physics body */
 		this.chassisShape = new CANNON.Box(new CANNON.Vec3(1, .3, 2));
 		this.chassisBody = new CANNON.Body({ mass: 30 });
@@ -110,7 +134,7 @@ export default class Physics {
 		});
 	}
 
-	createWheels(wheelMaterial) {
+	setWheels(wheelMaterial) {
 		const axlewidth = 0.85;
 		const chassisLength = 1.05
 
@@ -125,7 +149,7 @@ export default class Physics {
 
 		this.options.chassisConnectionPointLocal.set(-axlewidth, 0, chassisLength);
 		this.vehicle.addWheel(this.options);
-		
+
 		this.vehicle.addToWorld(this.world);
 
 		/* car wheels */
@@ -139,7 +163,7 @@ export default class Physics {
 		});
 	}
 	
-	createMoto() {
+	setMoto() {
 		this.shapeMoto = new CANNON.Box(new CANNON.Vec3(0.3, 1.5, 1.5));
 		this.bodyMoto = new CANNON.Body({ mass: 0, material: this.objectMaterial });
 		this.bodyMoto.addShape(this.shapeMoto);

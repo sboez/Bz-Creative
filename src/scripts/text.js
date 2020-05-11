@@ -20,7 +20,6 @@ export default class Text {
 			this.mesh = new THREE.Mesh(this.textGeo, this.material);
 			this.mesh.position.set(this.physic.bodyMoto.position.x, this.physic.bodyMoto.position.y + 2, this.physic.bodyMoto.position.z);
 			this.mesh.rotation.y = Math.PI;
-			this.mesh.visible = false;
 
 			this.scene.add(this.mesh);
 		});

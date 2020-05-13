@@ -23,6 +23,7 @@ export default class Key {
 		const engineForce = 300;
 		const maxSteerVal = 0.3;
 		switch(e.keyCode) {
+			case 90: /* forward - Z */
 			case 87: /* forward - W */
 				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : -engineForce, 2);
 				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : -engineForce, 3);
@@ -37,7 +38,7 @@ export default class Key {
 				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : -maxSteerVal, 2);
 				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : -maxSteerVal, 3);
 				break;
-
+			case 81: /* left - Q */
 			case 65: /* left - A */
 				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : maxSteerVal, 2);
 				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : maxSteerVal, 3);

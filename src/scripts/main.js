@@ -72,6 +72,9 @@ class App {
 
 		this.load.other.matrixAutoUpdate = false;
 		this.load.other.updateMatrix();
+
+		this.text.JSmesh.position.copy(this.physic.bodyJS.position);
+		this.text.JSmesh.quaternion.copy(this.physic.bodyJS.quaternion);
 	}
 
 	animate() {

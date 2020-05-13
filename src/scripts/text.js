@@ -9,17 +9,13 @@ export default class Text {
 
 		this.favFont = 'assets/fonts/Roboto_Regular.json';
 
-		this.setEnter();
-	}
+		this.loader = new THREE.FontLoader();
 
-	setWelcome() {
-		this.loader.load(this.favFont, font => {
-			this.textWelcome = new T
-		})
+		this.setEnter();
+		this.setSkills();
 	}
 
 	setEnter() {
-		this.loader = new THREE.FontLoader();
 		this.loader.load(this.favFont, font => {
 			this.textGeo = new THREE.TextGeometry('Enter', {
 			    font: font,
@@ -33,6 +29,21 @@ export default class Text {
 			this.mesh.rotation.y = Math.PI / 2;
 
 			this.scene.add(this.mesh);
+		});
+	}
+
+	setSkills() {
+		this.loader.load(this.favFont, font => {
+			this.textSkill = new THREE.TextGeometry('JS', {
+			    font: font,
+			    size: 1,
+			    height: 0.5
+			});
+			this.textSkill.center();
+			this.matSkill = new THREE.MeshBasicMaterial({ color: 0xf00f0 });
+			this.JSmesh = new THREE.Mesh(this.textSkill, this.matSkill);
+
+			this.scene.add(this.JSmesh);
 		});
 	}
 

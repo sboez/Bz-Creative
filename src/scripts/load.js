@@ -35,7 +35,7 @@ export default class Load {
 	loadOther(path) {
 		return new Promise((resolve) => {
 			const loader = new GLTFLoader();
-			loader.load(path, (gltf) => {
+			loader.load(path, gltf => {
 				this.other = gltf.scene;
 				this.other.traverse((object) => {
 					if (object.isMesh) {
@@ -44,8 +44,6 @@ export default class Load {
 					}
 				});
 				this.other.children[0].scale.multiplyScalar(8);
-				this.other.updateMatrixWorld();
-				this.other.matrixAutoUpdate = false;
 				this.scene.add(this.other);
 				resolve(this.other);
 			});

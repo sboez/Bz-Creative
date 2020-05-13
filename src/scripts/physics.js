@@ -10,6 +10,13 @@ export default class Physics {
 		this.setOptions();
 		this.setWorld();
 		this.listen();
+		this.setMaterials();
+		this.setGround();
+		this.setwalls();
+		this.setCar();
+		this.setWheels(this.wheelMaterial);
+		this.setMoto();
+		this.setSkills();
 	}
 
 	setOptions() {
@@ -38,13 +45,6 @@ export default class Physics {
 		this.world.broadphase = new CANNON.SAPBroadphase(this.world);
 		this.world.gravity.set(0, -10, 0);
 		this.world.defaultContactMaterial.friction = 0;
-
-		this.setMaterials();
-		this.setGround();
-		this.setwalls();
-		this.setCar();
-		this.setWheels(this.wheelMaterial);
-		this.setMoto();
 	}
 
 	listen() {
@@ -170,5 +170,14 @@ export default class Physics {
 		this.bodyMoto.position.set(-28, 0, 0);
 		this.bodyMoto.quaternion.setFromEuler(0, Math.PI, 0);
 		this.world.addBody(this.bodyMoto);
+	}
+
+	setSkills() {
+		this.shapeJS = new CANNON.Box(new CANNON.Vec3(0.75, 0.5, 0.25));
+		this.bodyJS = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
+		this.bodyJS.addShape(this.shapeJS);
+		this.bodyJS.position.set(10, 2, 10);
+		this.bodyJS.quaternion.setFromEuler(0, Math.PI, 0);
+		this.world.addBody(this.bodyJS);
 	}
 }

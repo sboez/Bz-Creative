@@ -12,9 +12,7 @@ export default class Scene extends THREE.Scene {
 
 		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 100);
 		this.camera.position.set(-5, 5, -10);
-
-		/* to enable orbitcontrols car model */
-		this.fakeCamera = this.camera.clone();
+		this.add(this.camera);
 
 		this.setGround();
 		this.setCeiling();
@@ -32,8 +30,9 @@ export default class Scene extends THREE.Scene {
 			side: THREE.BackSide
 		}));
 
-		this.plane.receiveShadow = true;
 		this.plane.rotation.x = Math.PI / 2;
+		this.plane.updateMatrixWorld();
+		this.plane.matrixAutoUpdate = false;
 		this.add(this.plane);
 	}
 
@@ -45,9 +44,10 @@ export default class Scene extends THREE.Scene {
 			metalness: 0.4
 		}));
 
-		this.ceiling.receiveShadow = true;
 		this.ceiling.position.y = 30;
 		this.ceiling.rotation.x = Math.PI / 2;
+		this.ceiling.updateMatrixWorld();
+		this.ceiling.matrixAutoUpdate = false;
 		this.add(this.ceiling);
 	}
 
@@ -58,7 +58,6 @@ export default class Scene extends THREE.Scene {
 				color: 0xe6e6e6
 			}));
 			this.wallMesh[i].position.y = 15;
-			this.wallMesh[i].receiveShadow = true;
 			this.add(this.wallMesh[i]);
 		}
 
@@ -75,21 +74,24 @@ export default class Scene extends THREE.Scene {
 		this.wallMesh[3].position.z = 30; // Front
 		this.wallMesh[3].rotation.z = Math.PI;
 		this.wallMesh[3].material.side = THREE.BackSide;
+
+		/* walls are static, don't need to update each frame */
+		for (let i = 0; i < 4; ++i) {
+			this.wallMesh[i].updateMatrixWorld();
+			this.wallMesh[i].matrixAutoUpdate = false;
+		}
 	}
 
 	setRenderer() {
 		this.renderer = new THREE.WebGLRenderer({ antialias: true });
-		this.renderer.shadowMap.enabled = true;
-		this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.outputEncoding = THREE.sRGBEncoding;
-		this.renderer.depth = false;
-		this.renderer.powerPreference = "high-performance";
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
+		window.renderInfo = this.renderer.info;
 	}
 
 	setControls() {		
-		let controls = new OrbitControls(this.fakeCamera, this.renderer.domElement);
-		controls.update();
+		this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+		this.controls.update();
 	}
 }

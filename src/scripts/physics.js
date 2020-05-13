@@ -164,11 +164,11 @@ export default class Physics {
 	}
 	
 	setMoto() {
-		this.shapeMoto = new CANNON.Box(new CANNON.Vec3(0.3, 1.5, 1.5));
+		this.shapeMoto = new CANNON.Box(new CANNON.Vec3(0.9, 4.5, 4.5));
 		this.bodyMoto = new CANNON.Body({ mass: 0, material: this.objectMaterial });
 		this.bodyMoto.addShape(this.shapeMoto);
-		this.bodyMoto.position.set(10, 0, 20);
-		this.bodyMoto.quaternion.setFromEuler(0, -Math.PI / 2, 0);
+		this.bodyMoto.position.set(-28, 0, 0);
+		this.bodyMoto.quaternion.setFromEuler(0, Math.PI, 0);
 		this.world.addBody(this.bodyMoto);
 	}
 }

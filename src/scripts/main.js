@@ -32,11 +32,11 @@ class App {
 	init() {
 		this.scene = new Scene();
 
-		this.lights = new Lights(this.scene);
-	
 		this.load = new Load(this.scene);
-		
+	
 		this.physic = new Physics(this.scene, this.load);
+		
+		this.lights = new Lights(this.scene, this.physic);
 
 		this.text = new Text(this.scene, this.lights, this.physic);
 
@@ -48,6 +48,10 @@ class App {
 		document.body.appendChild(this.stats.dom);
 		document.body.appendChild(this.scene.renderer.domElement);
 		window.addEventListener('resize', this.onWindowResize.bind(this), false);
+
+		this.scene.traverse((e) => {
+			if (e.isMesh)e.castShadow = e.receiveShadow = true;
+		});
 	}
 
 	onWindowResize() {
@@ -71,16 +75,17 @@ class App {
 	}
 
 	animate() {
+		requestAnimationFrame(this.animate.bind(this));
+
 		this.stats.begin();
 
 		this.text.checkDistance();
 
-		this.scene.fakeCamera.lookAt(-2, 3, 0);
-		this.scene.camera.copy(this.scene.fakeCamera);
+		this.scene.controls.target.copy(this.physic.chassisBody.position);
+		this.scene.controls.update();
 
 		this.lights.renderAmbiance();
 
-		requestAnimationFrame(this.animate.bind(this));
 		this.scene.renderer.render(this.scene, this.scene.camera);
 
 		this.updatePhysics();

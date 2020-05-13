@@ -1,29 +1,26 @@
 import * as THREE from 'three';
 
 export default class Lights {
-	constructor(scene) {
+	constructor(scene, physic) {
 		this.scene = scene;
+		this.physic = physic;
 
 		this.setAmbient();
-		this.setDetection();
 		this.setAmbiance();
 	}
 
 	setAmbient() {
 		const hemlight = new THREE.HemisphereLight(0x404040, 0x404040, 1); 
-		this.scene.add(hemlight);	
-	}
+		this.scene.add(hemlight);
 
-	setDetection() {
-		/* moto detection point lights */
-		this.motoLight = new THREE.PointLight(0xffffff, 10, 6);
-		this.motoLight.position.set(10, 5, 20);
-		this.scene.add(this.motoLight);
+		const directionalLight = new THREE.DirectionalLight(0xffffff);
+		directionalLight.position.set(0, 5, 0);
+		this.scene.add(directionalLight);
 	}
 
 	setAmbiance() {
 		this.pointLights = [];
-		this.pointLights.length = 4;
+		this.pointLights.length = 3;
 
 		const x = [], z = [];
 		this.v1 = [], this.v2 = [];
@@ -39,7 +36,7 @@ export default class Lights {
 
 		for (let i = 0; i < this.pointLights.length; ++i) {
 			this.pointLights[i] = new THREE.PointLight(this.getRandomColor(), 1, 50);
-			this.pointLights[i].position.set(x[i], 27, z[i]);
+			this.pointLights[i].position.set(x[i], 5, z[i]);
 			this.scene.add(this.pointLights[i]);
 		}
 	}

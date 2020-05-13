@@ -43,8 +43,9 @@ export default class Load {
 						object.receiveShadow = false;
 					}
 				});
-				this.other.children[0].scale.multiplyScalar(2);
-				this.other.position.set(20, 0, 0);
+				this.other.children[0].scale.multiplyScalar(8);
+				this.other.updateMatrixWorld();
+				this.other.matrixAutoUpdate = false;
 				this.scene.add(this.other);
 				resolve(this.other);
 			});

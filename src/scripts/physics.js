@@ -1,9 +1,10 @@
 import CANNON from 'cannon'
 
 export default class Physics {
-	constructor(scene, load) {
+	constructor(scene, load, text) {
 		this.scene = scene;
 		this.load = load;
+		this.text = text;
 
 		this.wheelBodies = [];
 
@@ -153,7 +154,7 @@ export default class Physics {
 		this.vehicle.addToWorld(this.world);
 
 		/* car wheels */
-		this.vehicle.wheelInfos.forEach((wheel) => {
+		this.vehicle.wheelInfos.forEach(wheel => {
 			const shape = new CANNON.Cylinder(wheel.radius, wheel.radius, 0.15, 20);
 			const body = new CANNON.Body({mass: 30, material: wheelMaterial});
 			const q = new CANNON.Quaternion();
@@ -173,11 +174,18 @@ export default class Physics {
 	}
 
 	setSkills() {
-		this.shapeJS = new CANNON.Box(new CANNON.Vec3(0.75, 0.5, 0.25));
-		this.bodyJS = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
-		this.bodyJS.addShape(this.shapeJS);
-		this.bodyJS.position.set(10, 2, 10);
-		this.bodyJS.quaternion.setFromEuler(0, Math.PI, 0);
-		this.world.addBody(this.bodyJS);
+		this.shapeSkill = [];
+		this.bodySkill = [];
+
+		for (let i = 0; i < this.text.skills.length; ++i) {
+			this.shapeSkill[i] = new CANNON.Box(new CANNON.Vec3(0.75, 0.55, 0.25));
+			this.bodySkill[i] = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
+			this.bodySkill[i].addShape(this.shapeSkill[i]);
+			this.bodySkill[i].position.set(10, 2, 10);
+			this.bodySkill[i].quaternion.setFromEuler(0, Math.PI, 0);
+			this.world.addBody(this.bodySkill[i]);
+		}
+
+		this.bodySkill[1].position.set(13, 5, 13);
 	}
 }

@@ -10,10 +10,10 @@ import Key from './keyboardEvent';
 class App {
 	constructor() {
 		this.scene = null;
-		this.lights = null;
 		this.load = null;
-		this.physic = null;
 		this.text = null;
+		this.physic = null;
+		this.lights = null;
 		this.key = null;
 
 		this.letsPlay();
@@ -34,11 +34,11 @@ class App {
 
 		this.load = new Load(this.scene);
 	
-		this.physic = new Physics(this.scene, this.load);
+		this.text = new Text(this.scene, this.lights, this.physic);
+		this.physic = new Physics(this.scene, this.load, this.text);
 		
 		this.lights = new Lights(this.scene, this.physic);
 
-		this.text = new Text(this.scene, this.lights, this.physic);
 
 		this.key = new Key(this.physic, this.load);
 
@@ -67,14 +67,17 @@ class App {
 		this.load.model.position.copy(this.physic.chassisBody.position);
 		this.load.model.quaternion.copy(this.physic.chassisBody.quaternion);
 	
+		/* update motorcyle position*/
 		this.load.other.position.copy(this.physic.bodyMoto.position);
 		this.load.other.quaternion.copy(this.physic.bodyMoto.quaternion);
-
 		this.load.other.matrixAutoUpdate = false;
 		this.load.other.updateMatrix();
 
-		this.text.JSmesh.position.copy(this.physic.bodyJS.position);
-		this.text.JSmesh.quaternion.copy(this.physic.bodyJS.quaternion);
+		/* update JS Skill position */
+		for (let i = 0; i < this.text.skills.length; ++i) {
+			this.text.skillMesh[i].position.copy(this.physic.bodySkill[i].position);
+			this.text.skillMesh[i].quaternion.copy(this.physic.bodySkill[i].quaternion);
+		}
 	}
 
 	animate() {

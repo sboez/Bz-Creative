@@ -185,7 +185,20 @@ export default class Physics {
 			this.bodySkill[i].quaternion.setFromEuler(0, Math.PI, 0);
 			this.world.addBody(this.bodySkill[i]);
 		}
-
+		
 		this.bodySkill[1].position.set(13, 5, 13);
+	}
+
+	checkDistance() {
+		/* check if car position is near to moto */
+		if (this.chassisBody.position.distanceTo(this.bodyMoto.position) <= 7) {
+			if (!this.isNear) {
+				this.text.playEnter(this.bodyMoto.position.x, this.bodyMoto.position.y, this.bodyMoto.position.z, true);
+				this.isNear = true;
+			}
+		} else {
+			this.text.playEnter(this.bodyMoto.position.x, this.bodyMoto.position.y, this.bodyMoto.position.z, false);
+			this.isNear = false;
+		}
 	}
 }

@@ -34,11 +34,11 @@ class App {
 
 		this.load = new Load(this.scene);
 	
-		this.text = new Text(this.scene, this.lights, this.physic);
+		this.text = new Text(this.scene, this.lights);
+
 		this.physic = new Physics(this.scene, this.load, this.text);
 		
 		this.lights = new Lights(this.scene, this.physic);
-
 
 		this.key = new Key(this.physic, this.load);
 
@@ -85,7 +85,7 @@ class App {
 
 		this.stats.begin();
 
-		this.text.checkDistance();
+		this.physic.checkDistance();
 
 		this.scene.controls.target.copy(this.physic.chassisBody.position);
 		this.scene.controls.update();

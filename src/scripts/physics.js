@@ -174,19 +174,35 @@ export default class Physics {
 	}
 
 	setSkills() {
-		this.shapeSkill = [];
 		this.bodySkill = [];
+		const y = 0.52, z = 0.15;
 
 		for (let i = 0; i < this.text.skills.length; ++i) {
-			this.shapeSkill[i] = new CANNON.Box(new CANNON.Vec3(0.75, 0.55, 0.25));
-			this.bodySkill[i] = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
-			this.bodySkill[i].addShape(this.shapeSkill[i]);
+			this.shapeSkill = new CANNON.Box(new CANNON.Vec3(0.75, y, z));
+			this.bodySkill[i] = new CANNON.Body({ mass: 2, material: this.wheelMaterial });
+			this.bodySkill[i].addShape(this.shapeSkill);
 			this.bodySkill[i].position.set(10, 2, 10);
 			this.bodySkill[i].quaternion.setFromEuler(0, Math.PI, 0);
 			this.world.addBody(this.bodySkill[i]);
 		}
-		
-		this.bodySkill[1].position.set(13, 5, 13);
+
+		this.bodySkill[1].position.set(13, 5, 13); // Three
+		this.bodySkill[1].addShape(new CANNON.Box(new CANNON.Vec3(2.7, y, z)));
+
+		this.bodySkill[2].position.set(17, 5, 17); // C
+		this.bodySkill[2].addShape(new CANNON.Box(new CANNON.Vec3(0.3, y, z)));
+
+		this.bodySkill[3].position.set(5, 5, 5); // Git
+		this.bodySkill[3].addShape(new CANNON.Box(new CANNON.Vec3(0.82, y, z)));
+
+		this.bodySkill[4].position.set(5, 5, 0); // HTMl
+		this.bodySkill[4].addShape(new CANNON.Box(new CANNON.Vec3(2.2, y, z)));
+
+		this.bodySkill[5].position.set(-10, 5, 0); // WebGL
+		this.bodySkill[5].addShape(new CANNON.Box(new CANNON.Vec3(2.2, y, z)));
+
+		this.bodySkill[6].position.set(-10, 5, 10); // Blender
+		this.bodySkill[6].addShape(new CANNON.Box(new CANNON.Vec3(2.3, y, z)));
 	}
 
 	checkDistance() {

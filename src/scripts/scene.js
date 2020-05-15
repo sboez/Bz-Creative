@@ -14,12 +14,6 @@ export default class Scene extends THREE.Scene {
 		this.camera.position.set(-5, 5, -10);
 		this.add(this.camera);
 
-		/* Box colision test */
-		this.geoTest = new THREE.BoxGeometry(5.4, 1, 0.5);
-		this.matTest = new THREE.MeshBasicMaterial({ color: 0xffff00, transparent: true, opacity: 0.2});
-		this.meshBoxTest = new THREE.Mesh(this.geoTest, this.matTest);
-		// this.add(this.meshBoxTest);
-
 		this.setGround();
 		this.setCeiling();
 		this.setWalls();

@@ -73,6 +73,13 @@ class App {
 		this.load.other.matrixAutoUpdate = false;
 		this.load.other.updateMatrix();
 
+		// this.scene.meshBoxTest.position.copy(this.physic.shelfBody.position);
+		// this.scene.meshBoxTest.quaternion.copy(this.physic.shelfBody.quaternion);
+
+		/* update shelf position */
+		this.scene.shelf.position.copy(this.physic.shelfBody.position);
+		this.scene.shelf.quaternion.copy(this.physic.shelfBody.quaternion);
+
 		/* update JS Skill position */
 		for (let i = 0; i < this.text.skills.length; ++i) {
 			this.text.skillMesh[i].position.copy(this.physic.bodySkill[i].position);

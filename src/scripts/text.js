@@ -75,14 +75,14 @@ export default class Text {
 
 			/* loop for add skills name in the scene */
 			for (let i = 0; i < this.skills.length; ++i) {
-				this.skillMat[i] = new THREE.MeshBasicMaterial({ color: 0xf7df1e });
+				this.skillMat[i] = new THREE.MeshBasicMaterial({ color: 0xffd500 });
 				this.skillMesh[i] = new THREE.Mesh(this.skillGeo[i], this.skillMat[i]);
 				this.skillMesh[i].position.set(10, 3, 10);
 				this.scene.add(this.skillMesh[i]);
 			};
 
 			this.skillMat[1].color.setHex(0xff00bf); // Three
-			this.skillMat[2].color.setHex(0xacbacb); // C
+			this.skillMat[2].color.setHex(0x1d63f0); // C
 			this.skillMat[3].color.setHex(0xf05033); // Git
 			this.skillMat[4].color.setHex(0xff1000); // HTML
 			this.skillMat[5].color.setHex(0x750510); // WebGL

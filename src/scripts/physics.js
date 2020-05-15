@@ -13,7 +13,8 @@ export default class Physics {
 		this.listen();
 		this.setMaterials();
 		this.setGround();
-		this.setwalls();
+		this.setShelf();
+		this.setWalls();
 		this.setCar();
 		this.setWheels(this.wheelMaterial);
 		this.setMoto();
@@ -93,7 +94,18 @@ export default class Physics {
 		this.world.addBody(this.groundBody);
 	}
 
-	setwalls() {
+	setShelf() {
+		this.shelfShape = new CANNON.Box(new CANNON.Vec3(2, 0.25, 15));
+		this.shelfBody = new CANNON.Body({
+			position: new CANNON.Vec3(28, 5, 0),
+			mass: 0, 
+			material: this.groundMaterial
+		});
+		this.shelfBody.addShape(this.shelfShape);
+		this.world.addBody(this.shelfBody);
+	}
+
+	setWalls() {
 		this.wallShape = [];
 		this.wallBody = [];
 		for (let i = 0; i < 4; ++i) {
@@ -122,7 +134,7 @@ export default class Physics {
 	setCar() {
 		/* car physics body */
 		this.chassisShape = new CANNON.Box(new CANNON.Vec3(1, .3, 2));
-		this.chassisBody = new CANNON.Body({ mass: 30 });
+		this.chassisBody = new CANNON.Body({ mass: 5 });
 		this.chassisBody.addShape(this.chassisShape);
 		this.chassisBody.angularVelocity.set(0, 0, 0);
 
@@ -156,7 +168,7 @@ export default class Physics {
 		/* car wheels */
 		this.vehicle.wheelInfos.forEach(wheel => {
 			const shape = new CANNON.Cylinder(wheel.radius, wheel.radius, 0.15, 20);
-			const body = new CANNON.Body({mass: 30, material: wheelMaterial});
+			const body = new CANNON.Body({mass: 5, material: wheelMaterial});
 			const q = new CANNON.Quaternion();
 			q.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), Math.PI / 2);
 			body.addShape(shape, new CANNON.Vec3(), q);
@@ -176,32 +188,33 @@ export default class Physics {
 	setSkills() {
 		this.bodySkill = [];
 		const y = 0.52, z = 0.15;
+		const posX = 27, posY = 5.5;
 
 		for (let i = 0; i < this.text.skills.length; ++i) {
 			this.shapeSkill = new CANNON.Box(new CANNON.Vec3(0.75, y, z));
 			this.bodySkill[i] = new CANNON.Body({ mass: 2, material: this.wheelMaterial });
 			this.bodySkill[i].addShape(this.shapeSkill);
-			this.bodySkill[i].position.set(10, 2, 10);
-			this.bodySkill[i].quaternion.setFromEuler(0, Math.PI, 0);
+			this.bodySkill[i].position.set(posX, posY, -6);
+			this.bodySkill[i].quaternion.setFromEuler(0, -Math.PI / 2, 0);
 			this.world.addBody(this.bodySkill[i]);
 		}
 
-		this.bodySkill[1].position.set(13, 5, 13); // Three
+		this.bodySkill[1].position.set(posX, posY, -1.5); // Three
 		this.bodySkill[1].addShape(new CANNON.Box(new CANNON.Vec3(2.7, y, z)));
 
-		this.bodySkill[2].position.set(17, 5, 17); // C
+		this.bodySkill[2].position.set(posX, posY, -13.5); // C
 		this.bodySkill[2].addShape(new CANNON.Box(new CANNON.Vec3(0.3, y, z)));
 
-		this.bodySkill[3].position.set(5, 5, 5); // Git
+		this.bodySkill[3].position.set(posX, posY, 8.5); // Git
 		this.bodySkill[3].addShape(new CANNON.Box(new CANNON.Vec3(0.82, y, z)));
 
-		this.bodySkill[4].position.set(5, 5, 0); // HTMl
+		this.bodySkill[4].position.set(posX, posY, -9.9); // HTMl
 		this.bodySkill[4].addShape(new CANNON.Box(new CANNON.Vec3(2.2, y, z)));
 
-		this.bodySkill[5].position.set(-10, 5, 0); // WebGL
+		this.bodySkill[5].position.set(posX, posY, 4.5); // WebGL
 		this.bodySkill[5].addShape(new CANNON.Box(new CANNON.Vec3(2.2, y, z)));
 
-		this.bodySkill[6].position.set(-10, 5, 10); // Blender
+		this.bodySkill[6].position.set(posX, posY, 12.5); // Blender
 		this.bodySkill[6].addShape(new CANNON.Box(new CANNON.Vec3(2.3, y, z)));
 	}
 

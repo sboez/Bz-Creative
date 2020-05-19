@@ -38,7 +38,7 @@ class App {
 
 		this.physic = new Physics(this.scene, this.load, this.text);
 		
-		this.lights = new Lights(this.scene, this.physic);
+		this.lights = new Lights(this.scene);
 
 		this.key = new Key(this.physic, this.load);
 
@@ -67,18 +67,21 @@ class App {
 		this.load.model.position.copy(this.physic.chassisBody.position);
 		this.load.model.quaternion.copy(this.physic.chassisBody.quaternion);
 	
-		/* update motorcyle position*/
+		/* update motorcyle position */
 		this.load.other.position.copy(this.physic.bodyMoto.position);
 		this.load.other.quaternion.copy(this.physic.bodyMoto.quaternion);
 		this.load.other.matrixAutoUpdate = false;
 		this.load.other.updateMatrix();
 
-		// this.scene.meshBoxTest.position.copy(this.physic.shelfBody.position);
-		// this.scene.meshBoxTest.quaternion.copy(this.physic.shelfBody.quaternion);
-
 		/* update shelf position */
 		this.scene.shelf.position.copy(this.physic.shelfBody.position);
 		this.scene.shelf.quaternion.copy(this.physic.shelfBody.quaternion);
+
+		/* update ramp position */
+		this.scene.ramp.position.copy(this.physic.rampBody.position);
+		this.scene.ramp.quaternion.copy(this.physic.rampBody.quaternion);
+		this.scene.ramp.updateMatrixWorld();
+		this.scene.ramp.matrixAutoUpdate = false;
 
 		/* update JS Skill position */
 		for (let i = 0; i < this.text.skills.length; ++i) {

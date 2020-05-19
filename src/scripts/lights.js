@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 
 export default class Lights {
-	constructor(scene, physic) {
+	constructor(scene) {
 		this.scene = scene;
-		this.physic = physic;
 
 		this.setAmbient();
 		this.setAmbiance();

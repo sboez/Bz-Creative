@@ -14,16 +14,10 @@ export default class Scene extends THREE.Scene {
 		this.camera.position.set(-5, 5, -10);
 		this.add(this.camera);
 
-		/* Box colision test */
-		this.geoTest = new THREE.BoxGeometry(4, 0.5, 30);
-		this.matTest = new THREE.MeshBasicMaterial({ color: 0x00ff48, transparent: true, opacity: 0.2});
-		this.meshBoxTest = new THREE.Mesh(this.geoTest, this.matTest);
-		// this.add(this.meshBoxTest);
-
-
 		this.setGround();
 		this.setCeiling();
 		this.setShelf();
+		this.setRamp();
 		this.setWalls();
 		this.setRenderer();
 		this.setControls();
@@ -60,16 +54,24 @@ export default class Scene extends THREE.Scene {
 	}
 
 	setShelf() {
-		this.shelf = new THREE.Mesh(new THREE.BoxBufferGeometry(30, 4, 0.5), new THREE.MeshBasicMaterial({
+		this.shelf = new THREE.Mesh(new THREE.BoxBufferGeometry(45, 4, 0.5), new THREE.MeshBasicMaterial({
 			color: 0x6f609b,
-			side: THREE.DoubleSide
+			side: THREE.FrontSide
 		}));
 
-		this.shelf.position.set(28, 5, 0);
+		this.shelf.position.set(28, 5, -7.5);
 		this.shelf.rotation.set(Math.PI / 2, 0, Math.PI / 2);
 		this.shelf.updateMatrixWorld();
 		this.shelf.matrixAutoUpdate = false;
 		this.add(this.shelf);
+	}
+
+	setRamp() {
+		this.ramp = new THREE.Mesh(new THREE.BoxGeometry(18, 0.5, 15), new THREE.MeshBasicMaterial({
+			color: 0xff0048,
+			wireframe: true
+		}));
+		this.add(this.ramp);
 	}
 
 	setWalls() {

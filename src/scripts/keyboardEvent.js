@@ -43,10 +43,9 @@ export default class Key {
 				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : maxSteerVal, 2);
 				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : maxSteerVal, 3);
 				break;
-
-			case 13: /* enter */
-				window.open(this.load.other.userData.URL);
-				break;
 		}
+
+		if (e.keyCode == 13 && this.physic.isGithub) window.open("https://github.com/sboez");
+		if (e.keyCode == 13 && this.physic.isLinkedin) window.open("https://www.linkedin.com/in/sandra-boez-224b11b8/");
 	}
 }

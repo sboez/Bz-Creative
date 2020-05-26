@@ -192,7 +192,7 @@ export default class Physics {
 	}
 
 	checkDistance() {
-		/* check if car position is near to moto */
+		/* check if car position is near the moto */
 		if (this.chassisBody.position.distanceTo(this.bodyMoto.position) <= 7) {
 			if (!this.isNear) {
 				this.text.playEnter(this.bodyMoto.position.x, this.bodyMoto.position.y, this.bodyMoto.position.z, true);
@@ -202,6 +202,29 @@ export default class Physics {
 			this.text.playEnter(this.bodyMoto.position.x, this.bodyMoto.position.y, this.bodyMoto.position.z, false);
 			this.isNear = false;
 		}
+
+		/* check if car position is near the github model */
+		if (this.chassisBody.position.distanceTo(this.load.obj[0].position) <= 7) {
+			// if (!this.isGithub) {
+				this.load.obj[0].rotation.y += 0.04;
+				this.isGithub = true;
+			// }
+		} else {
+			this.load.obj[0].rotation.set(0,0,0);
+			this.isGithub = false;
+		}
+
+		/* check if car position is near the linkedin model */
+		if (this.chassisBody.position.distanceTo(this.load.obj[1].position) <= 7) {
+			// if (!this.isLinkedin) {
+				this.load.obj[1].rotation.y += 0.04;
+				this.isLinkedin = true;
+			// }
+		} else {
+			this.load.obj[1].rotation.set(0,0,0);
+			this.isLinkedin = false;
+		}
+
 	}
 
 	setMoto() {

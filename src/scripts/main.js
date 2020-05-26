@@ -24,7 +24,10 @@ class App {
 
 		await this.load.loadFile('assets/models/street_car.glb');
 		await this.load.loadOther('assets/models/motorbike.glb');
-		this.load.other.userData = { URL: "https://github.com/sboez" };
+		await this.load.loadObj();
+
+		this.load.obj[0].position.set(-29, 3, 13);
+
 
 		this.animate();
 	}

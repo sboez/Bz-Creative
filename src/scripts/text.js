@@ -125,10 +125,10 @@ export default class Text {
 	setExp() {
 		this.setYear();
 
-		const school42 = "2016 - 2019 \n Only C langage - Making some graphic projects \n Fractals - Wolfenstein 3D - Raytracing";
-		const stage1 = "Société Générale - Fullstack JS Developer \n Internship 6 months \n R&D face and objects recognition";
-		const stage2 = "MadBox - HTML5 Developer \n Internship 6 months \n Mobile video games start-up \n Making Playables Ads 2D and 3D with Three.JS \n Participate to an interne editor with React";
-		const job1 = "FDJ Gaming Solutions - Front JS Developer \n Extern few days \n Making 2D games with Typescript and Pixi.js";
+		const school42 = "                            2016 - 2019 \nMaking some graphic projects in C langage \nFractals - Wolfenstein 3D - Raytracing";
+		const stage1 = "Société Générale - Fullstack JS Developer \nInternship 6 months \nR&D face and objects recognition";
+		const stage2 = "MadBox - HTML5 Developer \nInternship 6 months \nMobile video games start-up \nMaking Playables Ads 2D and 3D with Three.JS \nParticipate to an interne editor with React";
+		const job1 = "FDJ Gaming Solutions - Front JS Developer \nExtern during a few days \nMaking 2D web games with Typescript and Pixi.js";
 
 		this.exps = [school42, stage1, stage2, job1];
 		this.expMesh = [];

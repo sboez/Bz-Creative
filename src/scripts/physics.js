@@ -19,7 +19,7 @@ export default class Physics {
 		this.setCar();
 		this.setWheels(this.wheelMaterial);
 		this.setMoto();
-		this.setSkills();
+		// this.setSkills();
 	}
 
 	setWorld() {
@@ -205,23 +205,23 @@ export default class Physics {
 
 		/* check if car position is near the github model */
 		if (this.chassisBody.position.distanceTo(this.load.obj[0].position) <= 7) {
-			// if (!this.isGithub) {
-				this.load.obj[0].rotation.y += 0.04;
-				this.isGithub = true;
-			// }
+			this.load.obj[0].rotation.y += 0.04;
+			this.text.playEnter(this.load.obj[0].position.x, this.load.obj[0].position.y, this.load.obj[0].position.z, true);
+			this.isGithub = true;
 		} else {
-			this.load.obj[0].rotation.set(0,0,0);
+			this.load.obj[0].rotation.set(0, 0, 0);
+			this.text.playEnter(this.load.obj[0].position.x, this.load.obj[0].position.y, this.load.obj[0].position.z, false);
 			this.isGithub = false;
 		}
 
 		/* check if car position is near the linkedin model */
 		if (this.chassisBody.position.distanceTo(this.load.obj[1].position) <= 7) {
-			// if (!this.isLinkedin) {
-				this.load.obj[1].rotation.y += 0.04;
-				this.isLinkedin = true;
-			// }
+			this.load.obj[1].rotation.y += 0.04;
+			this.text.playEnter(this.load.obj[1].position.x, this.load.obj[1].position.y, this.load.obj[1].position.z, true);
+			this.isLinkedin = true;
 		} else {
-			this.load.obj[1].rotation.set(0,0,0);
+			this.load.obj[1].rotation.set(0, 0, 0);
+			this.text.playEnter(this.load.obj[1].position.x, this.load.obj[1].position.y, this.load.obj[1].position.z, false);
 			this.isLinkedin = false;
 		}
 

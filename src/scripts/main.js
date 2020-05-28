@@ -25,6 +25,7 @@ class App {
 		await this.load.loadFile('assets/models/street_car.glb');
 		await this.load.loadOther('assets/models/motorbike.glb');
 		await this.load.loadObj();
+		await this.load.loadRoom('assets/models/room.glb');
 
 		this.load.obj[0].position.set(-29, 3, 13);
 
@@ -87,10 +88,10 @@ class App {
 		this.scene.ramp.matrixAutoUpdate = false;
 
 		/* update JS Skill position */
-		for (let i = 0; i < this.text.skills.length; ++i) {
-			this.text.skillMesh[i].position.copy(this.physic.bodySkill[i].position);
-			this.text.skillMesh[i].quaternion.copy(this.physic.bodySkill[i].quaternion);
-		}
+		// for (let i = 0; i < this.text.skills.length; ++i) {
+		// 	this.text.skillMesh[i].position.copy(this.physic.bodySkill[i].position);
+		// 	this.text.skillMesh[i].quaternion.copy(this.physic.bodySkill[i].quaternion);
+		// }
 	}
 
 	animate() {

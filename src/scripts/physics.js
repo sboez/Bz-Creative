@@ -19,7 +19,7 @@ export default class Physics {
 		this.setCar();
 		this.setWheels(this.wheelMaterial);
 		this.setMoto();
-		// this.setSkills();
+		this.setSkills();
 	}
 
 	setWorld() {
@@ -68,14 +68,14 @@ export default class Physics {
 	}
 
 	setRamp() {
-		this.rampShape = new CANNON.Box(new CANNON.Vec3(9, 0.25, 7.5));
+		this.rampShape = new CANNON.Box(new CANNON.Vec3(8.6, 0.25, 5.5));
 		this.rampBody = new CANNON.Body({
-			position: new CANNON.Vec3(17.5, 2.25, -22.5),
+			position: new CANNON.Vec3(18, 2.15, -24.5),
 			mass: 0, 
 			material: this.groundMaterial
 		});
 		this.rampBody.addShape(this.rampShape);
-		this.rampBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 0, 1), Math.PI / 10);
+		this.rampBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 0, 1), Math.PI / 9.36);
 		this.world.addBody(this.rampBody);
 	}
 

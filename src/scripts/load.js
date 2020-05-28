@@ -32,24 +32,6 @@ export default class Load {
 			});
 		});
 	}
-	
-	loadOther(path) {
-		return new Promise((resolve) => {
-			const loader = new GLTFLoader();
-			loader.load(path, gltf => {
-				this.other = gltf.scene;
-				this.other.traverse((object) => {
-					if (object.isMesh) {
-						object.castShadow = true;
-						object.receiveShadow = false;
-					}
-				});
-				this.other.children[0].scale.multiplyScalar(8);
-				this.scene.add(this.other);
-				resolve(this.other);
-			});
-		});
-	}
 
 	loadObj() {
 		this.path = ['assets/models/github.glb', 'assets/models/linkedin.glb'];
@@ -84,10 +66,10 @@ export default class Load {
 					if (object.isMesh) {
 						object.castShadow = true;
 						object.receiveShadow = false;
-						object.material.side = THREE.BackSide;
 					}
 				});
 				this.room.scale.multiplyScalar(7.53);
+				console.log(this.room);
 				this.scene.add(this.room);
 				resolve(this.room);
 			});

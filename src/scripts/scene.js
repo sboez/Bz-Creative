@@ -14,31 +14,8 @@ export default class Scene extends THREE.Scene {
 		this.camera.position.set(-5, 5, -10);
 		this.add(this.camera);
 
-		this.setShelf();
-		this.setRamp();
 		this.setRenderer();
 		this.setControls();
-	}
-
-	setShelf() {
-		this.shelf = new THREE.Mesh(new THREE.BoxBufferGeometry(45, 4, 0.5), new THREE.MeshBasicMaterial({
-			color: 0x6f609b,
-			side: THREE.FrontSide
-		}));
-
-		this.shelf.position.set(28, 5, -7.5);
-		this.shelf.rotation.set(Math.PI / 2, 0, Math.PI / 2);
-		this.shelf.updateMatrixWorld();
-		this.shelf.matrixAutoUpdate = false;
-		this.add(this.shelf);
-	}
-
-	setRamp() {
-		this.ramp = new THREE.Mesh(new THREE.BoxGeometry(18, 0.5, 15), new THREE.MeshBasicMaterial({
-			color: 0xff0048,
-			wireframe: true
-		}));
-		this.add(this.ramp);
 	}
 
 	setRenderer() {

@@ -11,6 +11,7 @@ export default class Text {
 		this.loader = new THREE.FontLoader();
 
 		this.setEnter();
+		this.setSkills();
 	}
 
 	setEnter() {
@@ -53,5 +54,38 @@ export default class Text {
 			this.mesh.visible = false;
 		}
 			
+	}
+
+	setSkills() {
+		this.skills = ['JS', 'Three.JS', 'C', 'Git', 'HTML5', 'WebGL', 'Blender'];
+		this.skillMesh = [];
+		this.skillGeo = [];
+		this.skillMat = [];
+
+		/* loop in skills name */
+		this.loader.load(this.favFont, font => {
+			for (let i = 0; i < this.skills.length; ++i) {
+				this.skillGeo[i] = new THREE.TextGeometry(this.skills[i], {
+				    font: font,
+				    size: 1,
+				    height: 0.3
+				});
+				this.skillGeo[i].center();
+			}
+
+			/* loop for add skills name in the scene */
+			for (let i = 0; i < this.skills.length; ++i) {
+				this.skillMat[i] = new THREE.MeshBasicMaterial({ color: 0xffd500 });
+				this.skillMesh[i] = new THREE.Mesh(this.skillGeo[i], this.skillMat[i]);
+				this.scene.add(this.skillMesh[i]);
+			};
+
+			this.skillMat[1].color.setHex(0xff00bf); // Three
+			this.skillMat[2].color.setHex(0x1d63f0); // C
+			this.skillMat[3].color.setHex(0xf05033); // Git
+			this.skillMat[4].color.setHex(0xff1000); // HTML
+			this.skillMat[5].color.setHex(0x750510); // WebGL
+			this.skillMat[6].color.setHex(0x4acfc1); // Blender
+		});
 	}
 }

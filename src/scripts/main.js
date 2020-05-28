@@ -23,7 +23,6 @@ class App {
 		this.init();
 
 		await this.load.loadFile('assets/models/street_car.glb');
-		await this.load.loadOther('assets/models/motorbike.glb');
 		await this.load.loadObj();
 		await this.load.loadRoom('assets/models/room.glb');
 
@@ -70,28 +69,12 @@ class App {
 		/* update chassis position */	
 		this.load.model.position.copy(this.physic.chassisBody.position);
 		this.load.model.quaternion.copy(this.physic.chassisBody.quaternion);
-	
-		/* update motorcyle position */
-		this.load.other.position.copy(this.physic.bodyMoto.position);
-		this.load.other.quaternion.copy(this.physic.bodyMoto.quaternion);
-		this.load.other.matrixAutoUpdate = false;
-		this.load.other.updateMatrix();
-
-		/* update shelf position */
-		this.scene.shelf.position.copy(this.physic.shelfBody.position);
-		this.scene.shelf.quaternion.copy(this.physic.shelfBody.quaternion);
-
-		/* update ramp position */
-		this.scene.ramp.position.copy(this.physic.rampBody.position);
-		this.scene.ramp.quaternion.copy(this.physic.rampBody.quaternion);
-		this.scene.ramp.updateMatrixWorld();
-		this.scene.ramp.matrixAutoUpdate = false;
 
 		/* update JS Skill position */
-		// for (let i = 0; i < this.text.skills.length; ++i) {
-		// 	this.text.skillMesh[i].position.copy(this.physic.bodySkill[i].position);
-		// 	this.text.skillMesh[i].quaternion.copy(this.physic.bodySkill[i].quaternion);
-		// }
+		for (let i = 0; i < this.text.skills.length; ++i) {
+			this.text.skillMesh[i].position.copy(this.physic.bodySkill[i].position);
+			this.text.skillMesh[i].quaternion.copy(this.physic.bodySkill[i].quaternion);
+		}
 	}
 
 	animate() {

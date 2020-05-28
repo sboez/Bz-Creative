@@ -14,7 +14,7 @@ Open source website BzCreative, coming soon.
 
 :package: **Webpack :** I'm not familiary with this yet, config was tedious but finally it works !
 
-:chart_with_upwards_trend: **Performances :** Especially lights, shadows, reflections and physics are very heavy for our browsers. Some tricks was used to improve general peformance and keep a good fps. 
+:chart_with_upwards_trend: **Performances :** Especially lights, shadows, reflections and physics are very heavy for our browsers. Some tricks was used to improve general peformance and keep a good fps. I decided later to make the room and add his objects with Blender and export a .glb file. It's smaller, prettier and faster.
 
 
 ## Usage

@@ -11,10 +11,6 @@ export default class Lights {
 	setAmbient() {
 		const hemlight = new THREE.HemisphereLight(0x404040, 0x404040, 1); 
 		this.scene.add(hemlight);
-
-		const directionalLight = new THREE.DirectionalLight(0xffffff);
-		directionalLight.position.set(0, 5, 0);
-		this.scene.add(directionalLight);
 	}
 
 	setAmbiance() {

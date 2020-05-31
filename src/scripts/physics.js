@@ -237,36 +237,15 @@ export default class Physics {
 	}
 
 	setSkills() {
-		this.bodySkill = [];
-		const y = 0.52, z = 0.15;
-		const posX = 27, posY = 5.5;
+		const y = 0.4, z = 0.3;
+		const posX = 2, posY = .5;
 
-		for (let i = 0; i < this.text.skills.length; ++i) {
-			this.shapeSkill = new CANNON.Box(new CANNON.Vec3(0.75, y, z));
-			this.bodySkill[i] = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
-			this.bodySkill[i].addShape(this.shapeSkill);
-			this.bodySkill[i].position.set(posX, posY, -6);
-			this.bodySkill[i].quaternion.setFromEuler(0, -Math.PI / 2, 0);
-			this.world.addBody(this.bodySkill[i]);
-		}
-
-		this.bodySkill[1].position.set(posX, posY, -1.5); // Three
-		this.bodySkill[1].addShape(new CANNON.Box(new CANNON.Vec3(2.7, y, z)));
-
-		this.bodySkill[2].position.set(posX, posY, -13.5); // C
-		this.bodySkill[2].addShape(new CANNON.Box(new CANNON.Vec3(0.3, y, z)));
-
-		this.bodySkill[3].position.set(posX, posY, 8.5); // Git
-		this.bodySkill[3].addShape(new CANNON.Box(new CANNON.Vec3(0.82, y, z)));
-
-		this.bodySkill[4].position.set(posX, posY, -9.9); // HTMl
-		this.bodySkill[4].addShape(new CANNON.Box(new CANNON.Vec3(2.2, y, z)));
-
-		this.bodySkill[5].position.set(posX, posY, 4.5); // WebGL
-		this.bodySkill[5].addShape(new CANNON.Box(new CANNON.Vec3(2.2, y, z)));
-
-		this.bodySkill[6].position.set(posX, posY, 12.5); // Blender
-		this.bodySkill[6].addShape(new CANNON.Box(new CANNON.Vec3(2.3, y, z)));
+		this.shapeSkill = new CANNON.Box(new CANNON.Vec3(0.8, y, z));
+		this.bodySkill = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
+		this.bodySkill.addShape(this.shapeSkill);
+		this.bodySkill.position.set(posX, posY, .5);
+		this.bodySkill.quaternion.setFromEuler(Math.PI / 2, 0, Math.PI / 2);
+		this.world.addBody(this.bodySkill);
 	}
 
 }

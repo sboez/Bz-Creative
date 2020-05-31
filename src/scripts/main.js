@@ -27,7 +27,11 @@ class App {
 		await this.load.loadRoom('assets/models/room.glb');
 
 		this.load.obj[0].position.set(-29, 3, 13);
+		
+		/* JS Skill mesh */
+		this.skillMeshJS = this.load.room.children[11];
 
+		console.log(this.load.room.children[11]);
 
 		this.animate();
 	}
@@ -52,6 +56,7 @@ class App {
 		document.body.appendChild(this.scene.renderer.domElement);
 		window.addEventListener('resize', this.onWindowResize.bind(this), false);
 
+
 		this.scene.traverse((e) => {
 			if (e.isMesh)e.castShadow = e.receiveShadow = true;
 		});
@@ -71,10 +76,12 @@ class App {
 		this.load.model.quaternion.copy(this.physic.chassisBody.quaternion);
 
 		/* update JS Skill position */
-		for (let i = 0; i < this.text.skills.length; ++i) {
-			this.text.skillMesh[i].position.copy(this.physic.bodySkill[i].position);
-			this.text.skillMesh[i].quaternion.copy(this.physic.bodySkill[i].quaternion);
-		}
+		this.skillMeshJS.position.copy(this.physic.bodySkill.position);
+		this.skillMeshJS.quaternion.copy(this.physic.bodySkill.quaternion);
+
+		this.scene.meshBoxTest.position.copy(this.physic.bodySkill.position);
+		this.scene.meshBoxTest.quaternion.copy(this.physic.bodySkill.quaternion);
+
 	}
 
 	animate() {

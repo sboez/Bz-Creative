@@ -33,30 +33,6 @@ export default class Load {
 		});
 	}
 
-	loadObj() {
-		this.path = ['assets/models/github.glb', 'assets/models/linkedin.glb'];
-		this.obj = [];
-
-		return new Promise((resolve) => {
-			const loader = new GLTFLoader();
-			for (let i = 0; i < this.path.length; ++i) {
-				loader.load(this.path[i], gltf => {
-					this.obj[i] = gltf.scene;
-					this.obj[i].traverse((object) => {
-						if (object.isMesh) {
-							object.castShadow = true;
-							object.receiveShadow = false;
-						}
-					});
-					this.obj[i].children[0].scale.multiplyScalar(1);
-					this.obj[i].position.set(-29, 3, 21);
-					this.scene.add(this.obj[i]);
-					resolve(this.obj[i]);
-				});
-			};
-		});
-	}
-
 	loadRoom(path) {
 		return new Promise((resolve) => {
 			const loader = new GLTFLoader();

@@ -204,24 +204,24 @@ export default class Physics {
 		}
 
 		/* check if car position is near the github model */
-		if (this.chassisBody.position.distanceTo(this.load.obj[0].position) <= 7) {
-			this.load.obj[0].rotation.y += 0.04;
-			this.text.playEnter(this.load.obj[0].position.x, this.load.obj[0].position.y, this.load.obj[0].position.z, true);
+		if (this.chassisBody.position.distanceTo(this.load.room.children[18].position) <= 7) {
+			this.load.room.children[18].rotation.y += 0.04;
+			this.text.playEnter(this.load.room.children[18].position.x, this.load.room.children[18].position.y, this.load.room.children[18].position.z, true);
 			this.isGithub = true;
 		} else {
-			this.load.obj[0].rotation.set(0, 0, 0);
-			this.text.playEnter(this.load.obj[0].position.x, this.load.obj[0].position.y, this.load.obj[0].position.z, false);
+			this.load.room.children[18].rotation.set(Math.PI, 1.6, 0);
+			this.text.playEnter(this.load.room.children[18].position.x, this.load.room.children[18].position.y, this.load.room.children[18].position.z, false);
 			this.isGithub = false;
 		}
 
 		/* check if car position is near the linkedin model */
-		if (this.chassisBody.position.distanceTo(this.load.obj[1].position) <= 7) {
-			this.load.obj[1].rotation.y += 0.04;
-			this.text.playEnter(this.load.obj[1].position.x, this.load.obj[1].position.y, this.load.obj[1].position.z, true);
+		if (this.chassisBody.position.distanceTo(this.load.room.children[19].position) <= 7) {
+			this.load.room.children[19].rotation.y += 0.04;
+			this.text.playEnter(this.load.room.children[19].position.x, this.load.room.children[19].position.y, this.load.room.children[19].position.z, true);
 			this.isLinkedin = true;
 		} else {
-			this.load.obj[1].rotation.set(0, 0, 0);
-			this.text.playEnter(this.load.obj[1].position.x, this.load.obj[1].position.y, this.load.obj[1].position.z, false);
+			this.load.room.children[19].rotation.set(Math.PI, -1.6, 0);
+			this.text.playEnter(this.load.room.children[19].position.x, this.load.room.children[19].position.y, this.load.room.children[19].position.z, false);
 			this.isLinkedin = false;
 		}
 

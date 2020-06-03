@@ -24,13 +24,10 @@ class App {
 		this.load = new Load(this.scene);
 
 		await this.load.loadFile('assets/models/street_car.glb');
-		await this.load.loadObj();
 		await this.load.loadRoom('assets/models/room.glb');
 		await this.load.initSkills();
 
 		this.init();
-
-		this.load.obj[0].position.set(-29, 3, 13);
 
 		this.animate();
 	}

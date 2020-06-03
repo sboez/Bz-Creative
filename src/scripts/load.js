@@ -68,26 +68,31 @@ export default class Load {
 						object.receiveShadow = false;
 					}
 				});
-				this.room.scale.multiplyScalar(7.53);
+
+				/* to have physics and glb room at the same scale */
+				const roomScale = 7.53
+
+                for(let i = 0; i < this.room.children.length; ++i) { 
+                    let child = this.room.children[i]
+                    child.position.multiplyScalar(roomScale);
+                    child.scale.multiplyScalar(roomScale);
+                }
 				this.scene.add(this.room);
 				resolve(this.room);
 			});
 		});
 	}
 
-	// initSkills() {
-	// 	this.skills = [];
-	// 	return new Promise((resolve) => {
-	// 		for (let i = 0; i < this.room.children.length; ++i) {
-	// 			if (this.room.children[i].name.match('skill_')) {
-	// 				this.skills[i] = this.room.children[i].name.split('skill_').pop();
-	// 			}
-	// 		}
-	// 		if (this.skills[11] === "JS") {
-	// 			this.skillJS = new THREE.Mesh(this.skills[11].geometry, this.skills[11].material);
-	// 			this.scene.add(this.skillJS);
-	// 		}
-	// 		resolve(this.skillJS);
-	// 	});
-	// }
+	initSkills() {
+		this.skills = [];
+
+		return new Promise((resolve) => {
+			for (let i = 0; i < this.room.children.length; ++i) {
+				if (this.room.children[i].name.match('skill_')) {
+					this.skills[i] = this.room.children[i];
+				}
+			}
+			resolve(this.skills);
+		});
+	}
 }

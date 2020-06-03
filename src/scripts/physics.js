@@ -59,7 +59,7 @@ export default class Physics {
 	setShelf() {
 		this.shelfShape = new CANNON.Box(new CANNON.Vec3(2, 0.25, 22.5));
 		this.shelfBody = new CANNON.Body({
-			position: new CANNON.Vec3(28, 5, -7.5),
+			position: new CANNON.Vec3(28, 4.8, -7.6),
 			mass: 0, 
 			material: this.groundMaterial
 		});
@@ -237,15 +237,37 @@ export default class Physics {
 	}
 
 	setSkills() {
-		const y = 0.4, z = 0.3;
-		const posX = 2, posY = .5;
+		const y = 0.3, z = 0.55;
+		const posX = 27, posY = 8;
 
-		this.shapeSkill = new CANNON.Box(new CANNON.Vec3(0.8, y, z));
-		this.bodySkill = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
-		this.bodySkill.addShape(this.shapeSkill);
-		this.bodySkill.position.set(posX, posY, .5);
-		this.bodySkill.quaternion.setFromEuler(Math.PI / 2, 0, Math.PI / 2);
-		this.world.addBody(this.bodySkill);
+		this.bodySkill = [];
+
+		for(let i = 11; i < this.load.skills.length; ++i) { 
+			this.shapeSkill = new CANNON.Box(new CANNON.Vec3(0.85, y, z));
+			this.bodySkill[i] = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
+			this.bodySkill[i].addShape(this.shapeSkill);
+			this.bodySkill[i].position.set(posX, posY, -17); // JS
+			this.bodySkill[i].quaternion.setFromEuler(Math.PI / 2, 0, Math.PI / 2);
+			this.world.addBody(this.bodySkill[i]);
+		}
+
+		this.bodySkill[12].position.set(posX + 2, posY, -15); // C
+		this.bodySkill[12].addShape(new CANNON.Box(new CANNON.Vec3(0.55, 0.3, z)));
+
+		this.bodySkill[13].position.set(posX, posY, -10.5); // HTML5
+		this.bodySkill[13].addShape(new CANNON.Box(new CANNON.Vec3(2.5, y, z)));
+
+		this.bodySkill[14].position.set(posX + 2, posY, -4); // ThreeJS
+		this.bodySkill[14].addShape(new CANNON.Box(new CANNON.Vec3(3, y, z)));
+
+		this.bodySkill[15].position.set(posX, posY, 2.5); // WebGL
+		this.bodySkill[15].addShape(new CANNON.Box(new CANNON.Vec3(2.55, y, z)));
+
+		this.bodySkill[16].position.set(posX + 2, posY, 7); // Git
+		this.bodySkill[16].addShape(new CANNON.Box(new CANNON.Vec3(1, y, z)));
+
+		this.bodySkill[17].position.set(posX, posY, 12); // Blender
+		this.bodySkill[17].addShape(new CANNON.Box(new CANNON.Vec3(2.8, y, z)));
 	}
 
 }

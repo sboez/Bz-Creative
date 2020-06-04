@@ -4,14 +4,12 @@ import Scene from './scene';
 import Lights from './lights';
 import Physics from './physics';
 import Load from './load';
-import Text from './text';
 import Key from './keyboardEvent';
 
 class App {
 	constructor() {
 		this.scene = null;
 		this.load = null;
-		this.text = null;
 		this.physic = null;
 		this.lights = null;
 		this.key = null;
@@ -33,8 +31,6 @@ class App {
 	}
 	
 	init() {
-		this.text = new Text(this.scene, this.lights);
-
 		this.physic = new Physics(this.scene, this.load, this.text);
 		
 		this.lights = new Lights(this.scene);
@@ -67,7 +63,7 @@ class App {
 		this.load.model.quaternion.copy(this.physic.chassisBody.quaternion);
 
 		/* update JS Skill position */
-		for (let i = 11; i < this.load.skills.length; ++i) {
+		for (let i = 13; i < this.load.skills.length; ++i) {
 			this.load.skills[i].position.copy(this.physic.bodySkill[i].position);
 			this.load.skills[i].quaternion.copy(this.physic.bodySkill[i].quaternion);
 		}

@@ -52,6 +52,7 @@ export default class Load {
                     let child = this.room.children[i]
                     child.position.multiplyScalar(roomScale);
                     child.scale.multiplyScalar(roomScale);
+					// console.log(this.room.children[i].name.match('skill_Git'));
                 }
 				this.scene.add(this.room);
 				resolve(this.room);

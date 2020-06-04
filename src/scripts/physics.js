@@ -192,36 +192,25 @@ export default class Physics {
 	}
 
 	checkDistance() {
-		/* check if car position is near the moto */
-		if (this.chassisBody.position.distanceTo(this.bodyMoto.position) <= 7) {
-			if (!this.isNear) {
-				this.text.playEnter(this.bodyMoto.position.x, this.bodyMoto.position.y, this.bodyMoto.position.z, true);
-				this.isNear = true;
-			}
-		} else {
-			this.text.playEnter(this.bodyMoto.position.x, this.bodyMoto.position.y, this.bodyMoto.position.z, false);
-			this.isNear = false;
-		}
-
 		/* check if car position is near the github model */
-		if (this.chassisBody.position.distanceTo(this.load.room.children[18].position) <= 7) {
-			this.load.room.children[18].rotation.y += 0.04;
-			this.text.playEnter(this.load.room.children[18].position.x, this.load.room.children[18].position.y, this.load.room.children[18].position.z, true);
+		if (this.chassisBody.position.distanceTo(this.load.room.children[20].position) <= 7) {
+			this.load.room.children[20].rotation.y += 0.04;
+			this.load.room.children[22].visible = true;
 			this.isGithub = true;
 		} else {
-			this.load.room.children[18].rotation.set(Math.PI, 1.6, 0);
-			this.text.playEnter(this.load.room.children[18].position.x, this.load.room.children[18].position.y, this.load.room.children[18].position.z, false);
+			this.load.room.children[20].rotation.set(Math.PI, 1.6, 0);
+			this.load.room.children[22].visible = false;
 			this.isGithub = false;
 		}
 
 		/* check if car position is near the linkedin model */
-		if (this.chassisBody.position.distanceTo(this.load.room.children[19].position) <= 7) {
-			this.load.room.children[19].rotation.y += 0.04;
-			this.text.playEnter(this.load.room.children[19].position.x, this.load.room.children[19].position.y, this.load.room.children[19].position.z, true);
+		if (this.chassisBody.position.distanceTo(this.load.room.children[21].position) <= 7) {
+			this.load.room.children[21].rotation.y += 0.04;
+			this.load.room.children[23].visible = true;
 			this.isLinkedin = true;
 		} else {
-			this.load.room.children[19].rotation.set(Math.PI, -1.6, 0);
-			this.text.playEnter(this.load.room.children[19].position.x, this.load.room.children[19].position.y, this.load.room.children[19].position.z, false);
+			this.load.room.children[21].rotation.set(Math.PI, -1.6, 0);
+			this.load.room.children[23].visible = false;
 			this.isLinkedin = false;
 		}
 
@@ -242,7 +231,7 @@ export default class Physics {
 
 		this.bodySkill = [];
 
-		for(let i = 11; i < this.load.skills.length; ++i) { 
+		for(let i = 13; i < this.load.skills.length; ++i) { 
 			this.shapeSkill = new CANNON.Box(new CANNON.Vec3(0.85, y, z));
 			this.bodySkill[i] = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
 			this.bodySkill[i].addShape(this.shapeSkill);
@@ -251,23 +240,23 @@ export default class Physics {
 			this.world.addBody(this.bodySkill[i]);
 		}
 
-		this.bodySkill[12].position.set(posX + 2, posY, -15); // C
-		this.bodySkill[12].addShape(new CANNON.Box(new CANNON.Vec3(0.55, 0.3, z)));
+		this.bodySkill[14].position.set(posX + 2, posY, -15); // C
+		this.bodySkill[14].addShape(new CANNON.Box(new CANNON.Vec3(0.55, 0.3, z)));
 
-		this.bodySkill[13].position.set(posX, posY, -10.5); // HTML5
-		this.bodySkill[13].addShape(new CANNON.Box(new CANNON.Vec3(2.5, y, z)));
+		this.bodySkill[15].position.set(posX, posY, -10.5); // HTML5
+		this.bodySkill[15].addShape(new CANNON.Box(new CANNON.Vec3(2.5, y, z)));
 
-		this.bodySkill[14].position.set(posX + 2, posY, -4); // ThreeJS
-		this.bodySkill[14].addShape(new CANNON.Box(new CANNON.Vec3(3, y, z)));
+		this.bodySkill[16].position.set(posX + 2, posY, -4); // ThreeJS
+		this.bodySkill[16].addShape(new CANNON.Box(new CANNON.Vec3(3, y, z)));
 
-		this.bodySkill[15].position.set(posX, posY, 2.5); // WebGL
-		this.bodySkill[15].addShape(new CANNON.Box(new CANNON.Vec3(2.55, y, z)));
+		this.bodySkill[17].position.set(posX, posY, 2.5); // WebGL
+		this.bodySkill[17].addShape(new CANNON.Box(new CANNON.Vec3(2.55, y, z)));
 
-		this.bodySkill[16].position.set(posX + 2, posY, 7); // Git
-		this.bodySkill[16].addShape(new CANNON.Box(new CANNON.Vec3(1, y, z)));
+		this.bodySkill[18].position.set(posX + 2, posY, 7); // Git
+		this.bodySkill[18].addShape(new CANNON.Box(new CANNON.Vec3(1, y, z)));
 
-		this.bodySkill[17].position.set(posX, posY, 12); // Blender
-		this.bodySkill[17].addShape(new CANNON.Box(new CANNON.Vec3(2.8, y, z)));
+		this.bodySkill[19].position.set(posX, posY, 12); // Blender
+		this.bodySkill[19].addShape(new CANNON.Box(new CANNON.Vec3(2.8, y, z)));
 	}
 
 }

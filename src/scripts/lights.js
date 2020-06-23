@@ -37,7 +37,6 @@ export default class Lights {
 	}
 
 	renderAmbiance() {
-		const clock = new THREE.Clock();
 		const time = Date.now() * 0.0025;
 		const dt = 0.1;
 

@@ -1,5 +1,4 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import * as THREE from 'three';
 
 export default class Load {
 	constructor(scene) {
@@ -27,6 +26,7 @@ export default class Load {
 					this.model.getObjectByName("SR_Veh_Wheel_RL"),
 					this.model.getObjectByName("SR_Veh_Wheel_RR")
 				];
+				
 				this.scene.add(this.model);
 				resolve(this.model);
 			});
@@ -52,8 +52,8 @@ export default class Load {
                     let child = this.room.children[i]
                     child.position.multiplyScalar(roomScale);
                     child.scale.multiplyScalar(roomScale);
-					// console.log(this.room.children[i].name.match('skill_Git'));
                 }
+
 				this.scene.add(this.room);
 				resolve(this.room);
 			});

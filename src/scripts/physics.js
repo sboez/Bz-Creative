@@ -1,12 +1,16 @@
 import CANNON from 'cannon';
 
 export default class Physics {
-	constructor(scene, load, text) {
+	constructor(scene, load) {
 		this.scene = scene;
 		this.load = load;
-		this.text = text;
 
 		this.wheelBodies = [];
+
+		this.GITHUB = this.load.room.getObjectByName("link_github");
+		this.ENTER_GITHUB = this.load.room.getObjectByName("text_enter_github");
+		this.LINKEDIN = this.load.room.getObjectByName("link_linkedin");
+		this.ENTER_LINKEDIN = this.load.room.getObjectByName("text_enter_linkedin");
 
 		this.setWorld();
 		this.setMaterials();
@@ -193,27 +197,26 @@ export default class Physics {
 
 	checkDistance() {
 		/* check if car position is near the github model */
-		if (this.chassisBody.position.distanceTo(this.load.room.children[20].position) <= 7) {
-			this.load.room.children[20].rotation.y += 0.04;
-			this.load.room.children[22].visible = true;
+		if (this.chassisBody.position.distanceTo(this.GITHUB.position) <= 7) {
+			this.GITHUB.rotation.y += 0.04;
+			this.ENTER_GITHUB.visible = true;
 			this.isGithub = true;
 		} else {
-			this.load.room.children[20].rotation.set(Math.PI, 1.6, 0);
-			this.load.room.children[22].visible = false;
+			this.GITHUB.rotation.set(Math.PI, 1.6, 0);
+			this.ENTER_GITHUB.visible = false;
 			this.isGithub = false;
 		}
 
 		/* check if car position is near the linkedin model */
-		if (this.chassisBody.position.distanceTo(this.load.room.children[21].position) <= 7) {
-			this.load.room.children[21].rotation.y += 0.04;
-			this.load.room.children[23].visible = true;
+		if (this.chassisBody.position.distanceTo(this.LINKEDIN.position) <= 7) {
+			this.LINKEDIN.rotation.y += 0.04;
+			this.ENTER_LINKEDIN.visible = true;
 			this.isLinkedin = true;
 		} else {
-			this.load.room.children[21].rotation.set(Math.PI, -1.6, 0);
-			this.load.room.children[23].visible = false;
+			this.LINKEDIN.rotation.set(Math.PI, -1.6, 0);
+			this.ENTER_LINKEDIN.visible = false;
 			this.isLinkedin = false;
 		}
-
 	}
 
 	setMoto() {
@@ -258,5 +261,4 @@ export default class Physics {
 		this.bodySkill[19].position.set(posX, posY, 12); // Blender
 		this.bodySkill[19].addShape(new CANNON.Box(new CANNON.Vec3(2.8, y, z)));
 	}
-
 }

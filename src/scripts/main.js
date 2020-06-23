@@ -1,4 +1,3 @@
-import * as THREE from 'three';
 import Stats from 'stats.js';
 import Scene from './scene';
 import Lights from './lights';
@@ -26,12 +25,11 @@ class App {
 		await this.load.initSkills();
 
 		this.init();
-
 		this.animate();
 	}
-	
+
 	init() {
-		this.physic = new Physics(this.scene, this.load, this.text);
+		this.physic = new Physics(this.scene, this.load);
 		
 		this.lights = new Lights(this.scene);
 

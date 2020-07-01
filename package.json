@@ -4,7 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "webpack-dev-server --watch --open"
+    "start": "webpack-dev-server --watch --open",
+    "build": "webpack --config webpack.config.js"
   },
   "author": "sboez",
   "license": "MIT",
@@ -17,7 +18,6 @@
   },
   "dependencies": {
     "cannon": "^0.6.2",
-    "gsap": "^3.2.6",
     "three": "^0.116.0"
   }
 }

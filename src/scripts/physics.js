@@ -11,6 +11,7 @@ export default class Physics {
 		this.ENTER_GITHUB = this.load.room.getObjectByName("text_enter_github");
 		this.LINKEDIN = this.load.room.getObjectByName("link_linkedin");
 		this.ENTER_LINKEDIN = this.load.room.getObjectByName("text_enter_linkedin");
+		this.XP_WALL = this.load.room.getObjectByName("wall4");
 
 		this.setWorld();
 		this.setMaterials();
@@ -217,6 +218,12 @@ export default class Physics {
 			this.ENTER_LINKEDIN.visible = false;
 			this.isLinkedin = false;
 		}
+
+		/* check if car position is near the experience wall to do a focus on the wall */
+		if (this.chassisBody.position.distanceTo(this.XP_WALL.position) <= 20)
+			this.scene.camera.position.set(0, 3, 8);
+		else
+			this.scene.camera.position.set(-5, 5, -10);
 	}
 
 	setMoto() {

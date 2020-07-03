@@ -16,7 +16,6 @@ export default class Load {
 						object.receiveShadow = false;
 					}
 				});
-				// this.model.add(this.scene.camera);
 				this.model.children[0].scale.multiplyScalar(2.6);
 				this.model.children[0].position.y -= 0.36;
 

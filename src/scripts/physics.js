@@ -255,22 +255,22 @@ export default class Physics {
 			this.world.addBody(this.bodySkill[i]);
 		}
 
-		this.bodySkill[14].position.set(posX + 2, posY, -15); // C
-		this.bodySkill[14].addShape(new CANNON.Box(new CANNON.Vec3(0.55, 0.3, z)));
+		this.bodySkill[17].position.set(posX + 2, posY, -15); // C
+		this.bodySkill[17].addShape(new CANNON.Box(new CANNON.Vec3(0.55, 0.3, z)));
 
-		this.bodySkill[15].position.set(posX, posY, -10.5); // HTML5
-		this.bodySkill[15].addShape(new CANNON.Box(new CANNON.Vec3(2.5, y, z)));
+		this.bodySkill[18].position.set(posX, posY, -10.5); // HTML5
+		this.bodySkill[18].addShape(new CANNON.Box(new CANNON.Vec3(2.5, y, z)));
 
-		this.bodySkill[16].position.set(posX + 2, posY, -4); // ThreeJS
-		this.bodySkill[16].addShape(new CANNON.Box(new CANNON.Vec3(3, y, z)));
+		this.bodySkill[19].position.set(posX + 2, posY, -4); // ThreeJS
+		this.bodySkill[19].addShape(new CANNON.Box(new CANNON.Vec3(3, y, z)));
 
-		this.bodySkill[17].position.set(posX, posY, 2.5); // WebGL
-		this.bodySkill[17].addShape(new CANNON.Box(new CANNON.Vec3(2.55, y, z)));
+		this.bodySkill[20].position.set(posX, posY, 2.5); // WebGL
+		this.bodySkill[20].addShape(new CANNON.Box(new CANNON.Vec3(2.55, y, z)));
 
-		this.bodySkill[18].position.set(posX + 2, posY, 7); // Git
-		this.bodySkill[18].addShape(new CANNON.Box(new CANNON.Vec3(1, y, z)));
+		this.bodySkill[21].position.set(posX + 2, posY, 7); // Git
+		this.bodySkill[21].addShape(new CANNON.Box(new CANNON.Vec3(1, y, z)));
 
-		this.bodySkill[19].position.set(posX, posY, 12); // Blender
-		this.bodySkill[19].addShape(new CANNON.Box(new CANNON.Vec3(2.8, y, z)));
+		this.bodySkill[22].position.set(posX, posY, 12); // Blender
+		this.bodySkill[22].addShape(new CANNON.Box(new CANNON.Vec3(2.8, y, z)));
 	}
 }

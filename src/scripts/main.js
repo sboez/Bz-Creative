@@ -61,7 +61,7 @@ class App {
 		this.load.model.quaternion.copy(this.physic.chassisBody.quaternion);
 
 		/* update JS Skill position */
-		for (let i = 13; i < this.load.skills.length; ++i) {
+		for (let i = 16; i < this.load.skills.length; ++i) {
 			this.load.skills[i].position.copy(this.physic.bodySkill[i].position);
 			this.load.skills[i].quaternion.copy(this.physic.bodySkill[i].quaternion);
 		}

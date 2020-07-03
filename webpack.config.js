@@ -18,7 +18,9 @@ module.exports = {
 	],
 	devServer: {
 		contentBase: path.resolve(__dirname, 'dist'),
-		port: 9000, 
+		host: '192.168.1.11',
+	    port: 9000,
+	    disableHostCheck: true,
 		historyApiFallback: true
 	},
 	 module:

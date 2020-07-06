@@ -13,6 +13,7 @@ export default class Key {
 		window.addEventListener('keydown', this.keyboardEvent.bind(this));
 		window.addEventListener('keyup', this.keyboardEvent.bind(this));
 		window.addEventListener('touchstart', this.mobileEvent.bind(this));
+		window.addEventListener('touchend', this.mobileEvent.bind(this));
 	}
 
 	keyboardEvent(e) {
@@ -52,32 +53,39 @@ export default class Key {
 	}
 
 	mobileEvent(e) {
-		if ((e.touches[0].pageY - (window.innerHeight / 2)) < 0) {
-			if(e.touches[0].pageX - (window.innerWidth / 2) < 0) {
-				this.physic.vehicle.applyEngineForce(-this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(-this.engineForce, 3);
-				this.physic.vehicle.setSteeringValue(this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(this.maxSteerVal, 3);
+		if (e.type !== 'touchstart' && e.type !== 'touchend') return;
+		const isReleased = e.type === 'touchend';
+
+		if ((e.touches[0].pageY - (window.innerHeight / 2)) < 0) { // UP
+			if(e.touches[0].pageX - (window.innerWidth / 2) < 0) { // LEFT
+				console.log("UP LEFT");
+				this.physic.vehicle.applyEngineForce(isReleased ? 0 : -this.engineForce, 2);
+				this.physic.vehicle.applyEngineForce(isReleased ? 0 : -this.engineForce, 3);
+				this.physic.vehicle.setSteeringValue(isReleased ? 0 : this.maxSteerVal, 2);
+				this.physic.vehicle.setSteeringValue(isReleased ? 0 : this.maxSteerVal, 3);
 			}
-			else {
-				this.physic.vehicle.applyEngineForce(-this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(-this.engineForce, 3);
-				this.physic.vehicle.setSteeringValue(-this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(-this.maxSteerVal, 3);
+			else { // RIGHT
+				console.log("UP RIGHT");
+				this.physic.vehicle.applyEngineForce(isReleased ? 0 : -this.engineForce, 2);
+				this.physic.vehicle.applyEngineForce(isReleased ? 0 : -this.engineForce, 3);
+				this.physic.vehicle.setSteeringValue(isReleased ? 0 : -this.maxSteerVal, 2);
+				this.physic.vehicle.setSteeringValue(isReleased ? 0 : -this.maxSteerVal, 3);
 			}
 		}
-		else if ((e.touches[0].pageY - (window.innerHeight / 2)) > 0) {
-			if(e.touches[0].pageX - (window.innerWidth / 2) < 0) {
-				this.physic.vehicle.applyEngineForce(this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(this.engineForce, 3);
-				this.physic.vehicle.setSteeringValue(this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(this.maxSteerVal, 3);
+		else if ((e.touches[0].pageY - (window.innerHeight / 2)) > 0) { // DOWN
+			if(e.touches[0].pageX - (window.innerWidth / 2) < 0) { // LEFT
+				console.log("DOWN LEFT");
+				this.physic.vehicle.applyEngineForce(isReleased ? 0 : this.engineForce, 2);
+				this.physic.vehicle.applyEngineForce(isReleased ? 0 : this.engineForce, 3);
+				this.physic.vehicle.setSteeringValue(isReleased ? 0 : this.maxSteerVal, 2);
+				this.physic.vehicle.setSteeringValue(isReleased ? 0 : this.maxSteerVal, 3);
 			}
-			else {
-				this.physic.vehicle.applyEngineForce(this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(this.engineForce, 3);
-				this.physic.vehicle.setSteeringValue(-this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(-this.maxSteerVal, 3);
+			else { // RIGHT
+				console.log("DOWN RIGHT");
+				this.physic.vehicle.applyEngineForce(isReleased ? 0 : this.engineForce, 2);
+				this.physic.vehicle.applyEngineForce(isReleased ? 0 : this.engineForce, 3);
+				this.physic.vehicle.setSteeringValue(isReleased ? 0 : -this.maxSteerVal, 2);
+				this.physic.vehicle.setSteeringValue(isReleased ? 0 : -this.maxSteerVal, 3);
 			}
 		}
 	}

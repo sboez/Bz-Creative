@@ -55,7 +55,6 @@ export default class Load {
 
 				this.scene.add(this.room);
 				resolve(this.room);
-				console.log(this.room);
 			});
 		});
 	}

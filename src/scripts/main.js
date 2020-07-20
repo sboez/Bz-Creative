@@ -3,7 +3,7 @@ import Scene from './scene';
 import Lights from './lights';
 import Physics from './physics';
 import Load from './load';
-import Key from './keyboardEvent';
+import Controls from './controls';
 
 class App {
 	constructor() {
@@ -11,7 +11,7 @@ class App {
 		this.load = null;
 		this.physic = null;
 		this.lights = null;
-		this.key = null;
+		this.controls = null;
 
 		this.letsPlay();
 	}
@@ -33,7 +33,7 @@ class App {
 		
 		this.lights = new Lights(this.scene);
 
-		this.key = new Key(this.physic, this.load);
+		this.controls = new Controls(this.physic, this.load);
 
 		this.stats = new Stats();
 		this.stats.showPanel(0);
@@ -80,8 +80,6 @@ class App {
 		this.lights.renderAmbiance();
 
 		this.scene.renderer.render(this.scene, this.scene.camera);
-		
-		this.key.updateInputs();
 
 		this.updatePhysics();
 

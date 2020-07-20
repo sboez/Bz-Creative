@@ -17,8 +17,6 @@ export default class Physics {
 		this.setWorld();
 		this.setMaterials();
 		this.setGround();
-		this.setShelf();
-		this.setRamp();
 		this.setWalls();
 		this.setOptions();
 		this.listen();
@@ -60,29 +58,6 @@ export default class Physics {
 		this.groundBody.addShape(this.groundShape);
 		this.groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
 		this.world.addBody(this.groundBody);
-	}
-
-	setShelf() {
-		this.shelfShape = new CANNON.Box(new CANNON.Vec3(2, 0.25, 22.5));
-		this.shelfBody = new CANNON.Body({
-			position: new CANNON.Vec3(28, 4.8, -7.6),
-			mass: 0, 
-			material: this.groundMaterial
-		});
-		this.shelfBody.addShape(this.shelfShape);
-		this.world.addBody(this.shelfBody);
-	}
-
-	setRamp() {
-		this.rampShape = new CANNON.Box(new CANNON.Vec3(8.6, 0.25, 5.5));
-		this.rampBody = new CANNON.Body({
-			position: new CANNON.Vec3(18, 2.15, -24.5),
-			mass: 0, 
-			material: this.groundMaterial
-		});
-		this.rampBody.addShape(this.rampShape);
-		this.rampBody.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 0, 1), Math.PI / 9.36);
-		this.world.addBody(this.rampBody);
 	}
 
 	setWalls() {
@@ -246,7 +221,7 @@ export default class Physics {
 
 		this.bodySkill = [];
 
-		for(let i = 13; i < this.load.skills.length; ++i) { 
+		for(let i = 14; i < this.load.skills.length; ++i) { 
 			this.shapeSkill = new CANNON.Box(new CANNON.Vec3(0.85, y, z));
 			this.bodySkill[i] = new CANNON.Body({ mass: 1, material: this.wheelMaterial });
 			this.bodySkill[i].addShape(this.shapeSkill);
@@ -255,22 +230,22 @@ export default class Physics {
 			this.world.addBody(this.bodySkill[i]);
 		}
 
-		this.bodySkill[17].position.set(posX + 2, posY, -15); // C
-		this.bodySkill[17].addShape(new CANNON.Box(new CANNON.Vec3(0.55, 0.3, z)));
+		this.bodySkill[15].position.set(posX + 2, posY, -15); // C
+		this.bodySkill[15].addShape(new CANNON.Box(new CANNON.Vec3(0.55, 0.3, z)));
 
-		this.bodySkill[18].position.set(posX, posY, -10.5); // HTML5
-		this.bodySkill[18].addShape(new CANNON.Box(new CANNON.Vec3(2.5, y, z)));
+		this.bodySkill[16].position.set(posX, posY, -10.5); // HTML5
+		this.bodySkill[16].addShape(new CANNON.Box(new CANNON.Vec3(2.5, y, z)));
 
-		this.bodySkill[19].position.set(posX + 2, posY, -4); // ThreeJS
-		this.bodySkill[19].addShape(new CANNON.Box(new CANNON.Vec3(3, y, z)));
+		this.bodySkill[17].position.set(posX + 2, posY, -4); // ThreeJS
+		this.bodySkill[17].addShape(new CANNON.Box(new CANNON.Vec3(3, y, z)));
 
-		this.bodySkill[20].position.set(posX, posY, 2.5); // WebGL
-		this.bodySkill[20].addShape(new CANNON.Box(new CANNON.Vec3(2.55, y, z)));
+		this.bodySkill[18].position.set(posX, posY, 2.5); // WebGL
+		this.bodySkill[18].addShape(new CANNON.Box(new CANNON.Vec3(2.55, y, z)));
 
-		this.bodySkill[21].position.set(posX + 2, posY, 7); // Git
-		this.bodySkill[21].addShape(new CANNON.Box(new CANNON.Vec3(1, y, z)));
+		this.bodySkill[19].position.set(posX + 2, posY, 7); // Git
+		this.bodySkill[19].addShape(new CANNON.Box(new CANNON.Vec3(1, y, z)));
 
-		this.bodySkill[22].position.set(posX, posY, 12); // Blender
-		this.bodySkill[22].addShape(new CANNON.Box(new CANNON.Vec3(2.8, y, z)));
+		this.bodySkill[20].position.set(posX, posY, 12); // Blender
+		this.bodySkill[20].addShape(new CANNON.Box(new CANNON.Vec3(2.8, y, z)));
 	}
 }

@@ -17,75 +17,57 @@ export default class Key {
 	}
 
 	keyboardEvent(e) {
-		if (e.type !== 'keydown' && e.type !== 'keyup') return;
-		const isKeyup = e.type === 'keyup';
+		this.lastEvent = e;
+	}
 
+	mobileEvent(e) {
+		this.lastEvent = e;
+	}
+
+	updateInputs() {
 		this.physic.vehicle.setBrake(0, 0);
 		this.physic.vehicle.setBrake(0, 1);
 		this.physic.vehicle.setBrake(0, 2);
 		this.physic.vehicle.setBrake(0, 3);
 
-		switch(e.keyCode) {
-			case 90: /* forward - Z */
-			case 87: /* forward - W */
-				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : -this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : -this.engineForce, 3);
-				break;
+		if(!this.lastEvent)return;
+		let e = this.lastEvent;
 
-			case 83: /* backward - S */
-				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(isKeyup ? 0 : this.engineForce, 3);
-				break;
+		if (e.type === 'touchstart' || e.type === 'touchend' || e.type === 'touchmove') {
+			let w2 = window.innerWidth / 2;
+			let h2 = window.innerHeight / 2;
+			let ndx = (e.touches[0].pageX - w2) / w2;
+			let ndy = (e.touches[0].pageY - h2) / h2;
 
-			case 68: /* right - D */
-				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : -this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : -this.maxSteerVal, 3);
-				break;
-			case 81: /* left - Q */
-			case 65: /* left - A */
-				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(isKeyup ? 0 : this.maxSteerVal, 3);
-				break;
-		}
+			this.physic.vehicle.applyEngineForce(ndy * this.engineForce, 3);
+			this.physic.vehicle.setSteeringValue(ndx * this.maxSteerVal, 2);
 
-		if (e.keyCode == 13 && this.physic.isGithub) window.open("https://github.com/sboez");
-		if (e.keyCode == 13 && this.physic.isLinkedin) window.open("https://www.linkedin.com/in/sandra-boez-224b11b8/");
-	}
-
-	mobileEvent(e) {
-		if (e.type !== 'touchstart' && e.type !== 'touchend') return;
-		const isReleased = e.type === 'touchend';
-
-		if ((e.touches[0].pageY - (window.innerHeight / 2)) < 0) { // UP
-			if(e.touches[0].pageX - (window.innerWidth / 2) < 0) { // LEFT
-				console.log("UP LEFT");
-				this.physic.vehicle.applyEngineForce(isReleased ? 0 : -this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(isReleased ? 0 : -this.engineForce, 3);
-				this.physic.vehicle.setSteeringValue(isReleased ? 0 : this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(isReleased ? 0 : this.maxSteerVal, 3);
+			if (e.type === 'touchend' || ((ndx * ndx) + (ndy * ndy) < 0.001)) {
+				ndx = ndy = 0;
 			}
-			else { // RIGHT
-				console.log("UP RIGHT");
-				this.physic.vehicle.applyEngineForce(isReleased ? 0 : -this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(isReleased ? 0 : -this.engineForce, 3);
-				this.physic.vehicle.setSteeringValue(isReleased ? 0 : -this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(isReleased ? 0 : -this.maxSteerVal, 3);
-			}
-		}
-		else if ((e.touches[0].pageY - (window.innerHeight / 2)) > 0) { // DOWN
-			if(e.touches[0].pageX - (window.innerWidth / 2) < 0) { // LEFT
-				console.log("DOWN LEFT");
-				this.physic.vehicle.applyEngineForce(isReleased ? 0 : this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(isReleased ? 0 : this.engineForce, 3);
-				this.physic.vehicle.setSteeringValue(isReleased ? 0 : this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(isReleased ? 0 : this.maxSteerVal, 3);
-			}
-			else { // RIGHT
-				console.log("DOWN RIGHT");
-				this.physic.vehicle.applyEngineForce(isReleased ? 0 : this.engineForce, 2);
-				this.physic.vehicle.applyEngineForce(isReleased ? 0 : this.engineForce, 3);
-				this.physic.vehicle.setSteeringValue(isReleased ? 0 : -this.maxSteerVal, 2);
-				this.physic.vehicle.setSteeringValue(isReleased ? 0 : -this.maxSteerVal, 3);
+
+		} else if (e.type === 'keydown' || e.type === 'keyup') {
+			const isKeyup = e.type === 'keyup';
+
+			switch(e.keyCode) {
+				case 90: /* forward - Z */
+				case 87: /* forward - W */
+					this.physic.vehicle.applyEngineForce(isKeyup ? 0 : -this.engineForce, 2);
+					this.physic.vehicle.applyEngineForce(isKeyup ? 0 : -this.engineForce, 3);
+					break;
+				case 83: /* backward - S */
+					this.physic.vehicle.applyEngineForce(isKeyup ? 0 : this.engineForce, 2);
+					this.physic.vehicle.applyEngineForce(isKeyup ? 0 : this.engineForce, 3);
+					break;
+				case 68: /* right - D */
+					this.physic.vehicle.setSteeringValue(isKeyup ? 0 : -this.maxSteerVal, 2);
+					this.physic.vehicle.setSteeringValue(isKeyup ? 0 : -this.maxSteerVal, 3);
+					break;
+				case 81: /* left - Q */
+				case 65: /* left - A */
+					this.physic.vehicle.setSteeringValue(isKeyup ? 0 : this.maxSteerVal, 2);
+					this.physic.vehicle.setSteeringValue(isKeyup ? 0 : this.maxSteerVal, 3);
+					break;
 			}
 		}
 	}

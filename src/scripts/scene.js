@@ -4,6 +4,7 @@ import * as THREE from 'three';
 export default class Scene extends THREE.Scene {
 	constructor() {
 		super();
+
 		this.setScene();
 	}
 
@@ -12,7 +13,6 @@ export default class Scene extends THREE.Scene {
 
 		this.camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 100);
 		this.camera.position.set(-5, 5, -10);
-		this.add(this.camera);
 
 		this.setRenderer();
 		this.setControls();

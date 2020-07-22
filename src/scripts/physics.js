@@ -206,6 +206,10 @@ export default class Physics {
 		}
 	}
 
+	// Open() {
+	// 	window.open("https://www.linkedin.com/in/sandra-boez-224b11b8/")
+	// }
+
 	setMoto() {
 		this.shapeMoto = new CANNON.Box(new CANNON.Vec3(0.9, 4.5, 4.5));
 		this.bodyMoto = new CANNON.Body({ mass: 0, material: this.objectMaterial });

@@ -23,7 +23,7 @@ module.exports = {
 	    disableHostCheck: true,
 		historyApiFallback: true
 	},
-	 module:
+	module:
     {
         rules:
         [

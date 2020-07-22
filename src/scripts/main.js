@@ -4,6 +4,7 @@ import Lights from './lights';
 import Physics from './physics';
 import Load from './load';
 import Controls from './controls';
+import * as THREE from 'three';
 
 class App {
 	constructor() {
@@ -12,6 +13,10 @@ class App {
 		this.physic = null;
 		this.lights = null;
 		this.controls = null;
+
+		this.CLICK = 0;
+
+		this.mouse = new THREE.Vector2();
 
 		this.letsPlay();
 	}
@@ -33,6 +38,7 @@ class App {
 		
 		this.lights = new Lights(this.scene);
 
+		window.addEventListener( 'click', this.onDocumentMouseDown.bind(this), false );
 		this.controls = new Controls(this.physic, this.load);
 
 		this.stats = new Stats();
@@ -67,6 +73,42 @@ class App {
 		}
 	}
 
+	/* I set raycast to be able to click on Desktop.
+	On mobile device click is impossible with my virtual joystick so I set a timeout to open the link */
+	setRaycast() {
+		this.raycaster = new THREE.Raycaster();
+		this.raycaster.setFromCamera(this.mouse, this.scene.camera);    
+
+		const intersects = this.raycaster.intersectObjects(this.scene.children, true);
+
+		if (this.isMobile()) {
+			if (this.physic.isLinkedin && this.CLICK === 0) {
+				++this.CLICK;
+				if (this.CLICK === 1) setTimeout(this.openWindow, 3000);
+			}
+		}
+		else if (intersects.length > 0 && intersects[0].object.name === "link_linkedin" && this.physic.isLinkedin && this.CLICK === 0) {
+			++this.CLICK;
+			if (this.CLICK === 1) window.open("https://www.linkedin.com/in/sandra-boez-224b11b8/", "_blank");
+		}
+
+		if (!this.physic.isLinkedin) this.CLICK = 0;
+	}
+
+	openWindow() {
+		if (window.confirm('If you click "ok" you will be redirected on my Linkedin profile')) 
+			window.open("https://www.linkedin.com/in/sandra-boez-224b11b8/", "_blank");
+	}
+
+	isMobile() {
+		return ('ontouchstart' in document.documentElement);
+	}
+
+	onDocumentMouseDown(e) {
+		this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+		this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+	}
+
 	animate() {
 		requestAnimationFrame(this.animate.bind(this));
 
@@ -78,6 +120,8 @@ class App {
 		this.scene.controls.update();
 
 		this.lights.renderAmbiance();
+
+		this.setRaycast();
 
 		this.scene.renderer.render(this.scene, this.scene.camera);
 

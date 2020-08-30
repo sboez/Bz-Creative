@@ -3,7 +3,7 @@
 ![GitHub top language](https://img.shields.io/github/languages/top/sboez/Bz-Creative) <img src="https://img.shields.io/badge/three.js-r116-orange"> ![GitHub](https://img.shields.io/github/license/sboez/Bz-Creative)
 
 
-Open source to [my website](sandra.boez.fr).
+Open source to [my website](http://sandra.boez.fr).
 
 ## Work in progress... :construction:
 

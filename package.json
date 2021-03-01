@@ -19,6 +19,6 @@
   "dependencies": {
     "cannon": "^0.6.2",
     "nipplejs": "^0.8.5",
-    "three": "^0.116.0"
+    "three": "^0.125.0"
   }
 }
